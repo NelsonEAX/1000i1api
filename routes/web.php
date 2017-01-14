@@ -21,7 +21,7 @@ Route::get('/', function () {
 	$all = DbLanding::all();
 	print_r($all);
 });*/
-Auth::routes();
+/*Auth::routes();*/
 
 Route::get('/home', 'HomeController@index');
 Auth::routes();

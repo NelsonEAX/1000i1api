@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'api.1000i1.ru',
 
     /*
     |--------------------------------------------------------------------------
