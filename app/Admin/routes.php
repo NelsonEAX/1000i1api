@@ -1,11 +1,11 @@
 <?php
 
 Route::get('', ['as' => 'admin.dashboard', function () {
-	$content = 'Define your dashboard here.';
-	return AdminSection::view($content, 'Dashboard');
+	$content = 'Главная.';
+	return AdminSection::view($content, 'Главная');
 }]);
 
 Route::get('information', ['as' => 'admin.information', function () {
-	$content = 'Define your information here.';
-	return AdminSection::view($content, 'Information');
+	$content = 'Инфо.';
+	return AdminSection::view($content, 'Инфо');
 }]);

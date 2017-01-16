@@ -32,7 +32,7 @@ return [
 			(new Page(\App\Models\DbLanding::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
-			->setTitle('Landing')
+			->setTitle('Лендинги')
 			->setUrl('admin/potolok/land')
 			->setPriority(100)
 			->setBadge( new Badge( \App\Models\DbLanding::count()))
@@ -42,7 +42,7 @@ return [
 			(new Page(\App\Models\DbFeedback::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
-			->setTitle('FeedBack')
+			->setTitle('Обратная связь')
 			->setUrl('admin/potolok/feedback')
 			->setPriority(500)
 			->setBadge( new Badge( \App\Models\DbFeedback::count()))
@@ -52,7 +52,7 @@ return [
 			(new Page(\App\Models\DbSetting::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
-			->setTitle('Settings')
+			->setTitle('Настройки')
 			->setUrl('admin/potolok/settings')
 			->setPriority(200)
 			//->setBadge( new Badge( \App\Models\DbSetting::count()))
@@ -63,15 +63,17 @@ return [
 	],
 		
     [
-        'title' => 'Dashboard',
+        'title' => 'Главная',
         'icon'  => 'fa fa-dashboard',
         'url'   => route('admin.dashboard'),
+        'Priority' => 1,
     ],
 
     [
-        'title' => 'Information',
+        'title' => 'Инфо',
         'icon'  => 'fa fa-exclamation-circle',
         'url'   => route('admin.information'),
+        'Priority' => 1000,
     ],
 	
     // Examples
