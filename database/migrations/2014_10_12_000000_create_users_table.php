@@ -17,18 +17,19 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('password');
-            
+
+            $table->string('login');
             $table->string('name');
             $table->string('surname');
             $table->string('patronymic');
             $table->date('birthday');
 
-            /*Права*/
-            $table->boolean('is_eax')->default(0);			// - Владыка
-            $table->boolean('is_admin')->default(0);		// - Админ
-            $table->boolean('is_private')->default(0);		// - Физик
-            $table->boolean('is_legal')->default(0);		// - Юрик
-            $table->boolean('is_confirmed')->default(0);	// - Подтвержденный
+            /*пїЅпїЅпїЅпїЅпїЅ*/
+            $table->boolean('is_eax')->default(0);			// - пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            $table->boolean('is_admin')->default(0);		// - пїЅпїЅпїЅпїЅпїЅ
+            $table->boolean('is_private')->default(0);		// - пїЅпїЅпїЅпїЅпїЅ
+            $table->boolean('is_legal')->default(0);		// - пїЅпїЅпїЅпїЅ
+            $table->boolean('is_confirmed')->default(0);	// - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             
             /*
             dealer
