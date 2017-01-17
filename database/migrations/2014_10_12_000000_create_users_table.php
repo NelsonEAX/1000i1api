@@ -38,7 +38,7 @@ class CreateUsersTable extends Migration
             cutting
             a guest
             */
-            $table->string('confirm_str');
+           // $table->string('confirm_str');
             $table->rememberToken();
             $table->timestamps();
         });
