@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        if ($this->app->environment() !== 'production') {
+            $this->app->register(\GrahamCampbell\Exceptions\ExceptionsServiceProvider::class);
+            $this->app->register(\Barryvdh\Debugbar\ServiceProvider::class);
+        }
     }
 }
