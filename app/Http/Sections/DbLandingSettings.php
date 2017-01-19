@@ -68,12 +68,12 @@ class DbLandingSettings extends Section implements Initializable
     public function onEdit($id)
     {
     	return AdminForm::panel()->addBody([
-			AdminFormElement::text('land_pref', 'Поддомен')->required(),
+			AdminFormElement::text('land_pref', 'Поддомен')->required()->addValidationRule('unique:mysql_potolok.db_landing,land_pref,'.$id.',land_id', 'Этот поддомен уже занят, пробуй еще!'),
 			AdminFormElement::text('land_adres', 'Адрес')->required(),
 			AdminFormElement::text('land_ya_verif', 'Yandex верификация')->required(),
 			AdminFormElement::text('land_go_verif', 'Google верификация')->required(),
 			AdminFormElement::text('land_post', 'Индекс'),
-			AdminFormElement::text('land_geo', 'Координаты'),
+			AdminFormElement::text('land_geo', 'Координаты')->addValidationRule('regex:/\d{2}\.\d{6}\,\s\d{2}\.\d{6}/', 'Координаты должны иметь вид: 56.838607, 60.605514'),
 			AdminFormElement::textarea('land_desc_satin', 'satin'),
 			AdminFormElement::textarea('land_desc_glossy', 'glossy'),
 			AdminFormElement::textarea('land_desc_matt', 'matt'),
@@ -90,12 +90,12 @@ class DbLandingSettings extends Section implements Initializable
     public function onCreate()
     {
     	return AdminForm::panel()->addBody([
-			AdminFormElement::text('land_pref', 'Поддомен')->required(),
+			AdminFormElement::text('land_pref', 'Поддомен')->required()->addValidationRule('unique:mysql_potolok.db_landing,land_pref', 'Этот поддомен уже занят, пробуй еще!'),
 			AdminFormElement::text('land_adres', 'Адрес')->required(),
 			AdminFormElement::text('land_ya_verif', 'Yandex верификация'),
 			AdminFormElement::text('land_go_verif', 'Google верификация'),
 			AdminFormElement::text('land_post', 'Индекс'),
-			AdminFormElement::text('land_geo', 'Координаты'),
+			AdminFormElement::text('land_geo', 'Координаты')->addValidationRule('regex:/\d{2}\.\d{6}\,\s\d{2}\.\d{6}/', 'Координаты должны иметь вид: 56.838607, 60.605514'),
 			AdminFormElement::textarea('land_desc_satin', 'satin'),
 			AdminFormElement::textarea('land_desc_glossy', 'glossy'),
 			AdminFormElement::textarea('land_desc_matt', 'matt'),
