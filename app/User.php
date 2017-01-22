@@ -32,6 +32,11 @@ class User extends Authenticatable
     
     public function isAdmin()
     {
-    	return true;//$this->is_admin;
+    	return $this->is_admin;
+    }
+
+    public function isEAX()
+    {
+        return $this->is_eax;
     }
 }

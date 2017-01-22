@@ -35,7 +35,7 @@ class DbLandingSettings extends Section implements Initializable
     /**
      * @var string
      */
-    protected $title = '1000i1potolock | Лендинги';
+    protected $title = '1000i1potolok | Лендинги';
 
     /**
      * @var string
@@ -50,7 +50,7 @@ class DbLandingSettings extends Section implements Initializable
      */
     public function onDisplay()
     {
-    	return AdminDisplay::table()/*->with('users')*/
+    	return AdminDisplay::datatables()/*->with('users')*/
     	->setHtmlAttribute('class', 'table-primary')
     	->setColumns(
     			AdminColumn::text('land_id', '#')->setWidth('30px'),

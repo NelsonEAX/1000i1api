@@ -34,7 +34,7 @@ class DbFeedbackSettings extends Section implements Initializable
     /**
      * @var string
      */
-    protected $title = "1000i1potolock | Обратная связь";
+    protected $title = "1000i1potolok | Обратная связь";
 
     /**
      * @var string
@@ -46,7 +46,7 @@ class DbFeedbackSettings extends Section implements Initializable
      */
     public function onDisplay()
     {
-    	return AdminDisplay::table()/*->with('users')*/
+    	return AdminDisplay::datatables()/*->with('users')*/
     	->setHtmlAttribute('class', 'table-primary')
     	->setColumns(
     			AdminColumn::text('fb_id', '#')->setWidth('30px'),
