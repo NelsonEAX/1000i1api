@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class EAXMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,12 +14,11 @@ class AdminMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {    	
-    	if ( Auth::check() && Auth::user()->isAdmin() )
-    	{
-    		return $next($request);
-    	}
-    	
-    	return redirect('home');
+    {
+        if ( Auth::check() && Auth::user()->isEAX() )
+        {
+            return $next($request);
+        }
+        return redirect('home');
     }
 }

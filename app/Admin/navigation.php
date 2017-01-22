@@ -61,13 +61,24 @@ return [
 			}),
 		]
 	],
-		
-    [
-        'title' => 'Главная',
-        'icon'  => 'fa fa-dashboard',
-        'url'   => route('admin.dashboard'),
-        'Priority' => 1,
-    ],
+
+	[
+		'title' => 'Главная',
+		'icon'  => 'fa fa-dashboard',
+		'url'   => route('admin.dashboard'),
+		'Priority' => 1,
+	],
+
+	(new Page(\App\Models\DbFeedback::class))
+		->setPriority(2)
+		->setIcon('fa fa-users')
+		->setTitle('Контрагенты')
+		->setUrl('admin/users')
+		->setBadge( new Badge( \App\User::count()))
+		->setAccessLogic(function (Page $page) {
+			return true;
+		}),
+
 
     [
         'title' => 'Инфо',
