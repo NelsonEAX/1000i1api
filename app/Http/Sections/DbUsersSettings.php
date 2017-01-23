@@ -108,7 +108,7 @@ class DbUsersSettings extends Section implements Initializable
                 ], 4)->addColumn([
                     AdminFormElement::text('phone', 'Телефон')->required()
                         ->addValidationRule('unique:users,phone,'.$id, 'Этот номер телефона уже занят, пробуй еще!')
-                        ->addValidationRule('regex:/\d*/', 'Номер телефона должен иметь вид: +79876543210'),
+                        ->addValidationRule('regex:/^\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
                 ], 4),
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),
@@ -156,16 +156,16 @@ class DbUsersSettings extends Section implements Initializable
             $form->addBody([
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::text('login', 'Логин')->required()
-                        ->addValidationRule('unique', 'Этот Логин уже занят, пробуй еще!')
+                        ->addValidationRule('unique:users,login', 'Этот Логин уже занят, пробуй еще!')
                         ->addValidationRule('alpha_dash', 'Логин должен состоять из букв латинского алфавита и цифр'),
                 ], 4)->addColumn([
                     AdminFormElement::text('email', 'Емайл')->required()
-                        ->addValidationRule('unique', 'Этот электронный адрес уже занят, пробуй еще!')
+                        ->addValidationRule('unique:users,email', 'Этот электронный адрес уже занят, пробуй еще!')
                         ->addValidationRule('email', 'Электронный адрес должен иметь вид: example@mail.ru'),
                 ], 4)->addColumn([
                     AdminFormElement::text('phone', 'Телефон')->required()
-                        ->addValidationRule('unique', 'Этот номер телефона уже занят, пробуй еще!')
-                        ->addValidationRule('regex:/\d*/', 'Номер телефона должен иметь вид: +79876543210'),
+                        ->addValidationRule('unique:users,phone', 'Этот номер телефона уже занят, пробуй еще!')
+                        ->addValidationRule('regex:/^\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
                 ], 4),
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),
