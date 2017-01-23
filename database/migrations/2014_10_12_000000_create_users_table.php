@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('patronymic')->default('');
             $table->string('phone')->default('')->unique();
             $table->date('birthday')->default(date("Y-m-d"));
-            $table->text('comment');///->default('');
+            $table->text('comment')->nullable();
 
             /*�����*/
             $table->boolean('is_eax')->default(0);			// - �������
