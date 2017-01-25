@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,8 +29,8 @@ class DatabaseSeeder extends Seeder
 			'is_legal' => true,
 			'is_confirmed' => true,
 			'remember_token' => true,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
+			'created_at' => \Carbon\Carbon::now(),
+			'updated_at' => \Carbon\Carbon::now()
 		]);
 		DB::table('users')->insert([
 			'login' => 'managa',
@@ -47,8 +48,32 @@ class DatabaseSeeder extends Seeder
 			'is_legal' => true,
 			'is_confirmed' => true,
 			'remember_token' => true,
-			'created_at' => new DateTime,
-			'updated_at' => new DateTime
+			'created_at' => \Carbon\Carbon::now(),
+			'updated_at' => \Carbon\Carbon::now()
 		]);
+
+		$faker = Faker::create('ru_RU');
+		for ($i = 0; $i < 10; $i++){
+			DB::table('users')->insert([
+				'login' => $faker->userName,
+				'name' => $faker->firstNameMale,
+				'surname' => $faker->lastName,
+				'patronymic' => $faker->middleNameMale,
+				'birthday' => $faker->date(),
+				'phone' => $faker->phoneNumber,
+				'email' => $faker->email,
+				'password' => bcrypt('1234abcd'),
+				'comment' => $faker->address,
+				'is_eax' => false,
+				'is_admin' => false,
+				'is_private' => true,
+				'is_legal' => true,
+				'is_confirmed' => true,
+				'remember_token' => true,
+				'created_at' => \Carbon\Carbon::now(),
+				'updated_at' => \Carbon\Carbon::now()
+			]);
+		}
+
     }
 }
