@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "laravelrus/sleepingowl": "4.*@dev",
         "graham-campbell/exceptions": "^9.1",
-        "barryvdh/laravel-debugbar": "^2.3"
+        "barryvdh/laravel-debugbar": "^2.3",
+        "barryvdh/laravel-cors": "^0.8.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
