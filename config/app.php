@@ -177,6 +177,7 @@ return [
          * API
          */
         Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Debug, Exceptions, Log
