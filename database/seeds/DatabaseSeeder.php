@@ -50,5 +50,7 @@ class DatabaseSeeder extends Seeder
 			'created_at' => new DateTime,
 			'updated_at' => new DateTime
 		]);
+
+		factory(\App\Product::class, 50)->create();
     }
 }
