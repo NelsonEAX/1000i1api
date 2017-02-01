@@ -18,12 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->default(bcrypt('12345678'));
 
-            $table->string('login')->default('')->unique();
+            $table->string('login')->default('');//->unique();
             $table->string('photo')->nullable();
             $table->string('name')->default('');
             $table->string('surname')->default('');
             $table->string('patronymic')->default('');
-            $table->string('phone')->default('')->unique();
+            $table->string('phone')->default('');//->unique();
             $table->date('birthday')->default(date("Y-m-d"));
             $table->text('comment')->nullable();
 

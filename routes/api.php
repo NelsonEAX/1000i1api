@@ -26,6 +26,8 @@ Route::get('/test', function(){
    ]);
 });
 
+Route::post('/register', 'Auth\RegisterController@apiRegister');
+
 Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('products','ProductsController');
 });
