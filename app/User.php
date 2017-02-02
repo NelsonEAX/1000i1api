@@ -11,7 +11,7 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
     
     protected $casts = [
-    		'is_admin' => 'boolean',
+        'is_admin' => 'boolean',
     ];
     /**
      * The attributes that are mass assignable.
@@ -19,7 +19,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 
+        'email', 
+        'password',
+        'email_token',
     ];
 
     /**
@@ -31,9 +34,16 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
     
+    public function toConfirm()
+    {
+        $this->is_confirmed = 1;
+        $this->email_token = null;
+        $this->save();
+    } 
+    
     public function isAdmin()
     {
-    	return $this->is_admin;
+        return $this->is_admin;
     }
 
     public function isEAX()
