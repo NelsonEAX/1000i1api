@@ -31,6 +31,7 @@ class EmailVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.confirmation');
+        return $this->from('support@1000i1.ru')
+            ->view('emails.confirmation');
     }
 }

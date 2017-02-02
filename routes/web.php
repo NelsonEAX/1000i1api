@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\DbLanding;
+use App\Mail\EmailVerification;
+use App\User;
 use Illuminate\Support\Facades\Auth;
+//use Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,6 +18,18 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::get('/mail', function (Illuminate\Mail\Mailer $mailer) {
+    /*Mail::send('emails.confirmation', array('key' => 'value'), function($message)
+    {
+        $message->to('foo@example.com', 'Джон Смит')->subject('Подтверждение электронной почты!');
+    });*/
+    $mailer
+        ->to('sdfafd@dfgdfh.ru')
+        ->send(new EmailVerification(new User(['email_token' => 'fbdfbfffffff'])));
+    return 'ok';
 });
 
 /*Route::get('/land', function () {

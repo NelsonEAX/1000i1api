@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use DB;
-use Mail;
+//use Mail;
 use Validator;
 use App\User;
 use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
 
 class RegisterController extends Controller
 {
@@ -72,7 +73,7 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function apiRegister(Request $request)
+    public function apiRegister(Request $request, Mailer $mailer)
     {
         $data = $request->all();
         $validator = $this->validator($data);
@@ -89,8 +90,16 @@ class RegisterController extends Controller
         {
             $user = $this->create($data);
             // After creating the user send an email with the random token generated in the create method above
-            $email = new EmailVerification(new User(['email_token' => $user->email_token]));
-            //Mail::to($user->email)->send($email);
+            
+            /*$email = new EmailVerification(new User(['email_token' => $user->email_token]));
+            Mail::to($user->email)->send($email);
+            Mail::send('emails.confirmation', array('key' => 'value'), function($message)
+            {
+                $message->to('foo@example.com', 'Джон Смит')->subject('Подтверждение электронной почты!');
+            });*/
+            $mailer
+                ->to($user->email)
+                ->send(new EmailVerification($user));
             DB::commit();
             return response()->json([
                 'state' => true,
