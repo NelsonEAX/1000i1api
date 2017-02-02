@@ -27,6 +27,7 @@ Route::get('/test', function(){
 });
 
 Route::post('/register', 'Auth\RegisterController@apiRegister');
+Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm'); 
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('products','ProductsController');

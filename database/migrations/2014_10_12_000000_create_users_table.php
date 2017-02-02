@@ -27,12 +27,12 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->default(date("Y-m-d"));
             $table->text('comment')->nullable();
 
-            /*�����*/
-            $table->boolean('is_eax')->default(0);			// - �������
-            $table->boolean('is_admin')->default(0);		// - �����
-            $table->boolean('is_private')->default(0);		// - �����
-            $table->boolean('is_legal')->default(0);		// - ����
-            $table->boolean('is_confirmed')->default(0);	// - ��������������
+            /*Права*/
+            $table->boolean('is_eax')->default(0);		// - Владыка
+            $table->boolean('is_admin')->default(0);		// - Админ
+            $table->boolean('is_private')->default(0);		// - Физ.Лицо
+            $table->boolean('is_legal')->default(0);		// - Юр.Лицо
+            $table->boolean('is_confirmed')->default(0);	// - Подтвержден
             
             /*
             dealer
@@ -43,6 +43,7 @@ class CreateUsersTable extends Migration
             a guest
             */
            // $table->string('confirm_str');
+            $table->string('email_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

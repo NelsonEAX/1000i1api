@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-use Illuminate\Http\Request;
-use App\User;
+
+use DB;
+use Mail;
 use Validator;
+use App\User;
+use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -64,23 +68,64 @@ class RegisterController extends Controller
         return User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'email_token' => str_random(10),
         ]);
     }
 
     public function apiRegister(Request $request)
     {
-        $v = $this->validator($request->all());
-        if($v->fails())
+        $data = $request->all();
+        $validator = $this->validator($data);
+        if($validator->fails())
         {
             return response()->json([
-                'error' => $v->messages()
+                'state' => false,
+                'error' => $validator->messages()
             ]);
         }
-
-
-        $user = $this->create($request->all());
+       
+        DB::beginTransaction();
+        try
+        {
+            $user = $this->create($data);
+            // After creating the user send an email with the random token generated in the create method above
+            $email = new EmailVerification(new User(['email_token' => $user->email_token]));
+            //Mail::to($user->email)->send($email);
+            DB::commit();
+            return response()->json([
+                'state' => true,
+                'user' => $user,
+            ]);
+        }
+        catch(Exception $e)
+        {
+            DB::rollback(); 
+            return  response()->json([
+                'state' => false,
+                'error' => 'В процессе регистрации возникли проблемы',
+            ]);
+        }
+        
+        /*$user = $this->create($data);
         //$this->guard()->login($user);
-        return $this->guard()->login($user);;
+        return $user; //$this->guard()->login($user);;*/
 
+    }
+    
+    public function apiConfirm($token){
+        $user = User::where('email_token',$token)->firstOrFail(); 
+        if($user){
+            $user->toConfirm();
+            response()->json([
+                'state' => true,
+                'confirm' => true,
+                'user' => $user,
+            ]);
+        }else{
+            response()->json([
+                'state' => false,
+                'error' => 'Эта ссылка уже не действительна',
+            ]);
+        }        
     }
 }
