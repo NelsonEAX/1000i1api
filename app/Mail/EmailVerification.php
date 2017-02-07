@@ -13,6 +13,7 @@ class EmailVerification extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $vue_url;
     
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class EmailVerification extends Mailable
     public function __construct(User $user)
     {
         $this->user = $user;
+        $this->vue_url= env('VUE_URL', 'http://1000i2.ru').'/register/confirm/';
     }
 
     /**
