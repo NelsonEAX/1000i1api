@@ -89,14 +89,6 @@ class RegisterController extends Controller
         try
         {
             $user = $this->create($data);
-            // After creating the user send an email with the random token generated in the create method above
-            
-            /*$email = new EmailVerification(new User(['email_token' => $user->email_token]));
-            Mail::to($user->email)->send($email);
-            Mail::send('emails.confirmation', array('key' => 'value'), function($message)
-            {
-                $message->to('foo@example.com', 'Джон Смит')->subject('Подтверждение электронной почты!');
-            });*/
             $mailer
                 ->to($user->email)
                 ->send(new EmailVerification($user));
@@ -114,27 +106,27 @@ class RegisterController extends Controller
                 'error' => 'В процессе регистрации возникли проблемы',
             ]);
         }
-        
-        /*$user = $this->create($data);
-        //$this->guard()->login($user);
-        return $user; //$this->guard()->login($user);;*/
-
     }
     
     public function apiConfirm($token){
-        $user = User::where('email_token',$token)->firstOrFail(); 
-        if($user){
-            $user->toConfirm();
-            response()->json([
-                'state' => true,
-                'confirm' => true,
-                'user' => $user,
-            ]);
-        }else{
-            response()->json([
-                'state' => false,
-                'error' => 'Эта ссылка уже не действительна',
-            ]);
-        }        
+        try{
+            $user = User::where('email_token',$token)->first();
+            if($user){
+                $user->toConfirm();
+                return response()->json([
+                    'state' => true,
+                    'confirm' => true,
+                    'user' => $user,
+                ]);
+            }else{
+                return response()->json([
+                    'state' => false,
+                    'error' => 'Эта ссылка уже не действительна',
+                ]);
+            }
+        }
+        catch(\Exception $e){
+            // catch code
+        }
     }
 }
