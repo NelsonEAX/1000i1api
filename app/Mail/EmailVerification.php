@@ -23,7 +23,7 @@ class EmailVerification extends Mailable
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->vue_url= env('VUE_URL', 'http://1000i2.ru').'/register/confirm/';
+        $this->vue_url= env('VUE_URL', 'http://1000i1.ru').'/confirm/';
     }
 
     /**
@@ -33,7 +33,7 @@ class EmailVerification extends Mailable
      */
     public function build()
     {
-        return $this->from('support@1000i1.ru')
+        return $this->from('robot@1000i1.ru')
             ->view('emails.confirmation');
     }
 }
