@@ -27,7 +27,9 @@ Route::get('/test', function(){
 });
 
 Route::post('/register', 'Auth\RegisterController@apiRegister');
-Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm'); 
+Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm');
+Route::get('/setting/vue/server', 'Vue\Settings@server');
+Route::get('/setting/vue/secret', 'Vue\Settings@secret');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::resource('products','ProductsController');
