@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+/*Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+})->middleware('auth:api');*/
 
 Route::get('/test', function(){
    return response()->json([
@@ -28,9 +28,10 @@ Route::get('/test', function(){
 
 Route::post('/register', 'Auth\RegisterController@apiRegister');
 Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm');
-Route::get('/setting/vue/server', 'Vue\Settings@server');
-Route::get('/setting/vue/secret', 'Vue\Settings@secret');
+Route::get('/setting/vue/server', 'Vue\SettingsController@server');
+Route::get('/setting/vue/secret', 'Vue\SettingsController@secret');
 
 Route::group(['middleware' => 'auth:api'], function(){
-    Route::resource('products','ProductsController');
+    Route::get('/user', 'UserController@getInfo');
+    Route::resource('products','ProductsController');    
 });

@@ -8,21 +8,8 @@ use App\Http\Controllers\Controller;
 use Laravel\Passport\Client;
 //use
 
-class Settings extends Controller
+class SettingsController extends Controller
 {
-    private function return_host($url)
-    {
-        $url = str_replace(array('http://', 'https://'), '', $url);
-        $temp = explode('/', $url); // explode the url by /
-        if(strpos($temp[0], '.com')) { // check the url part
-            return $temp[0];
-        }
-        else {
-            return false;
-        }
-    }
-
-
     public function server()
     {
         /*prod*/
