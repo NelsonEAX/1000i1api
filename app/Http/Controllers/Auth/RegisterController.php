@@ -112,7 +112,7 @@ class RegisterController extends Controller
         try{
             $user = User::where('email_token',$token)->first();
             if($user){
-                $user->toConfirm();
+                $user->setConfirm();
                 return response()->json([
                     'state' => true,
                     'confirm' => true,
