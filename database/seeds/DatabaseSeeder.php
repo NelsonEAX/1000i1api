@@ -27,6 +27,19 @@ class DatabaseSeeder extends Seeder
 			'is_admin' => true,
 			'is_private' => true,
 			'is_legal' => true,
+			'is_manager' => true,
+			'is_manager_production' => true,
+			'is_cutter' => true,
+			'is_shareholder' => true,
+			'is_storekeeper' => true,
+			'is_dealer' => true,
+			'is_franchise' => true,
+			'is_agent' => true,
+			'is_related' => true,
+			'is_measurer' => true,
+			'is_installer' => true,
+			'is_delivery_city' => true,
+			'is_delivery_region' => true,
 			'is_confirmed' => true,
 			'remember_token' => true,
 			'created_at' => \Carbon\Carbon::now(),
@@ -46,6 +59,19 @@ class DatabaseSeeder extends Seeder
 			'is_admin' => true,
 			'is_private' => true,
 			'is_legal' => true,
+			'is_manager' => true,
+			'is_manager_production' => true,
+			'is_cutter' => true,
+			'is_shareholder' => true,
+			'is_storekeeper' => true,
+			'is_dealer' => true,
+			'is_franchise' => true,
+			'is_agent' => true,
+			'is_related' => true,
+			'is_measurer' => true,
+			'is_installer' => true,
+			'is_delivery_city' => true,
+			'is_delivery_region' => true,
 			'is_confirmed' => true,
 			'remember_token' => true,
 			'created_at' => \Carbon\Carbon::now(),
@@ -75,5 +101,7 @@ class DatabaseSeeder extends Seeder
 			]);
 		}
 
+
+		factory(\App\Product::class, 50)->create();
     }
 }

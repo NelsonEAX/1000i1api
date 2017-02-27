@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use DB;
+//use Mail;
 use Validator;
+use App\User;
+use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Mail\Mailer;
 
 class RegisterController extends Controller
 {
@@ -48,7 +53,6 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -63,9 +67,66 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'email_token' => str_random(10),
         ]);
+    }
+
+    public function apiRegister(Request $request, Mailer $mailer)
+    {
+        $data = $request->all();
+        $validator = $this->validator($data);
+        if($validator->fails())
+        {
+            return response()->json([
+                'state' => false,
+                'error' => $validator->messages()
+            ]);
+        }
+       
+        DB::beginTransaction();
+        try
+        {
+            $user = $this->create($data);
+            $mailer
+                ->to($user->email)
+                ->send(new EmailVerification($user));
+            DB::commit();
+            return response()->json([
+                'state' => true,
+                'user' => $user,
+            ]);
+        }
+        catch(Exception $e)
+        {
+            DB::rollback(); 
+            return  response()->json([
+                'state' => false,
+                'error' => 'В процессе регистрации возникли проблемы',
+            ]);
+        }
+    }
+    
+    public function apiConfirm($token){
+        try{
+            $user = User::where('email_token',$token)->first();
+            if($user){
+                $user->setConfirm();
+                return response()->json([
+                    'state' => true,
+                    'confirm' => true,
+                    'user' => $user,
+                ]);
+            }else{
+                return response()->json([
+                    'state' => false,
+                    'error' => 'Эта ссылка уже не действительна',
+                ]);
+            }
+        }
+        catch(\Exception $e){
+            // catch code
+        }
     }
 }
