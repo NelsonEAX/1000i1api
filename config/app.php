@@ -172,8 +172,20 @@ return [
          * SleepingOwl Service Provider
          */
         SleepingOwl\Admin\Providers\SleepingOwlServiceProvider::class,
+
+        /*
+         * API
+         */
+        Barryvdh\Cors\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+
+        /*
+         * Debug, Exceptions, Log
+         */
         GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */

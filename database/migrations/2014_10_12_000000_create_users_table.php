@@ -18,31 +18,42 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password')->default(bcrypt('12345678'));
 
-            $table->string('login')->default('')->unique();
+            $table->string('login')->default('');//->unique();
             $table->string('photo')->nullable();
             $table->string('name')->default('');
             $table->string('surname')->default('');
             $table->string('patronymic')->default('');
-            $table->string('phone')->default('')->unique();
+            $table->string('phone')->default('');//->unique();
             $table->date('birthday')->default(date("Y-m-d"));
             $table->text('comment')->nullable();
 
-            /*�����*/
-            $table->boolean('is_eax')->default(0);			// - �������
-            $table->boolean('is_admin')->default(0);		// - �����
-            $table->boolean('is_private')->default(0);		// - �����
-            $table->boolean('is_legal')->default(0);		// - ����
-            $table->boolean('is_confirmed')->default(0);	// - ��������������
-            
-            /*
-            dealer
-            measurement
-            installation
-            driver
-            cutting
-            a guest
-            */
-           // $table->string('confirm_str');
+            /** Права */
+            $table->boolean('is_eax')->default(0)->comment('Владыка');
+            $table->boolean('is_admin')->default(0)->comment('Админ');
+            $table->boolean('is_private')->default(0)->comment('Физ.Лицо');
+            $table->boolean('is_legal')->default(0)->comment('Юр.Лицо');
+
+            /** Собственные */
+            $table->boolean('is_manager')->default(0)->comment('Менеджер по звонкам');
+            $table->boolean('is_manager_production')->default(0)->comment('Менеджер цеха');
+            $table->boolean('is_cutter')->default(0)->comment('Кройщик');
+            $table->boolean('is_shareholder')->default(0)->comment('Пайщик');
+            $table->boolean('is_storekeeper')->default(0)->comment('Кладовщик');
+
+            /** Внешние */
+            $table->boolean('is_dealer')->default(0)->comment('Дилер');
+            $table->boolean('is_franchise')->default(0)->comment('Франшиза');
+            $table->boolean('is_agent')->default(0)->comment('Агент');
+            $table->boolean('is_related')->default(0)->comment('Смежник');
+
+            $table->boolean('is_measurer')->default(0)->comment('Замерщик');
+            $table->boolean('is_installer')->default(0)->comment('Монтажник');
+            $table->boolean('is_delivery_city')->default(0)->comment('Доставщик по городу');
+            $table->boolean('is_delivery_region')->default(0)->comment('Доставщик по городу');
+
+            // $table->string('confirm_str');
+            $table->boolean('is_confirmed')->default(0)->comment('Подтвержден');
+            $table->string('email_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
