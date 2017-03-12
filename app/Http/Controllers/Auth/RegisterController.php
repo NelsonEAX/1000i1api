@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 class RegisterController extends Controller
 {
@@ -93,6 +94,10 @@ class RegisterController extends Controller
                 ->to($user->email)
                 ->send(new EmailVerification($user));
             DB::commit();
+
+            //Добавляем авторизацию
+
+
             return response()->json([
                 'state' => true,
                 'user' => $user,
