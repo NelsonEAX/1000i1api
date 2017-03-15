@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Mailer;
 use Laravel\Passport\Http\Controllers\AccessTokenController;
+use Psr\Http\Message\ServerRequestInterface;
 
 class RegisterController extends Controller
 {
@@ -74,7 +75,11 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function apiRegister(Request $request, Mailer $mailer)
+    public function apiRegister(Request $request,
+                                Mailer $mailer,                     //Верификация
+                                ServerRequestInterface $request2,   //Получение токена
+                                AccessTokenController $token        //Получение токена
+    )
     {
         $data = $request->all();
         $validator = $this->validator($data);
@@ -95,13 +100,12 @@ class RegisterController extends Controller
                 ->send(new EmailVerification($user));
             DB::commit();
 
-            //Добавляем авторизацию
-
-
-            return response()->json([
+            //Авторизуем сразу
+            return $token->issueToken($request2);
+            /*return response()->json([
                 'state' => true,
                 'user' => $user,
-            ]);
+            ]);*/
         }
         catch(Exception $e)
         {
