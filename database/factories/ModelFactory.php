@@ -25,7 +25,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Product::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
-        'price' => $faker->randomFloat(2, 1, 100),
         'description' => $faker->paragraph(random_int(1,10)),
+        'model' => $faker->word,
+        'weight' => $faker->randomFloat(2, 1, 100),
+        'length' => $faker->randomFloat(2, 1, 100),
+        'width' => $faker->randomFloat(2, 1, 100),
+        'height' => $faker->randomFloat(2, 1, 100),
+        'manufacturer' => 1,
     ];
 });
