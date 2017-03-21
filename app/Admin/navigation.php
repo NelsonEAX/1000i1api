@@ -8,19 +8,19 @@ use SleepingOwl\Admin\Navigation\Badge;
 // 	   return auth()->user()->isSuperAdmin();
 // });
 //
-// AdminNavigation::addPage(\App\User::class)->setTitle('test')->setPages(function(Page $page) {
+// AdminNavigation::addPage(\App\Models\User::class)->setTitle('test')->setPages(function(Page $page) {
 // 	  $page
 //		  ->addPage()
 //	  	  ->setTitle('Dashboard')
 //		  ->setUrl(route('admin.dashboard'))
 //		  ->setPriority(100);
 //
-//	  $page->addPage(\App\User::class);
+//	  $page->addPage(\App\Models\User::class);
 // });
 //
 // // or
 //
-// AdminSection::addMenuPage(\App\User::class)
+// AdminSection::addMenuPage(\App\Models\User::class)
 
 return [
 	[
@@ -74,7 +74,7 @@ return [
 		->setIcon('fa fa-users')
 		->setTitle('Контрагенты')
 		->setUrl('admin/users')
-		->setBadge( new Badge( \App\User::count()))
+		->setBadge( new Badge( \App\Models\User::count()))
 		->setAccessLogic(function (Page $page) {
 			return true;
 		}),
@@ -92,11 +92,11 @@ return [
     //    'title' => 'Content',
     //    'pages' => [
     //
-    //        \App\User::class,
+    //        \App\Models\User::class,
     //
     //        // or
     //
-    //        (new Page(\App\User::class))
+    //        (new Page(\App\Models\User::class))
     //            ->setPriority(100)
     //            ->setIcon('fa fa-user')
     //            ->setUrl('users')
