@@ -15,7 +15,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 
 class DbUsersSettings extends Section implements Initializable
 {
-    protected $model = '\App\User';
+    protected $model = '\App\Models\User';
     /**
      * @var bool
      */
@@ -37,7 +37,7 @@ class DbUsersSettings extends Section implements Initializable
     public function onDisplay()
     {
         $rights_classes = 'bg-purple text-center';
-        $rights1 = AdminColumn::custom()->setLabel('Админ')->setCallback(function (\App\User $user) {
+        $rights1 = AdminColumn::custom()->setLabel('Админ')->setCallback(function (\App\Models\User $user) {
             return $user->is_admin ? '<i class="fa fa-check"></i>' : '';
         })->setOrderable(false)
             ->setWidth('50px')

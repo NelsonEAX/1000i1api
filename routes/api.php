@@ -25,6 +25,7 @@ Route::get('/test', function(){
       ]
    ]);
 });
+Route::get('/test2', 'ProductController@index');
 
 Route::post('/register', 'Auth\RegisterController@apiRegister');
 Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm');
