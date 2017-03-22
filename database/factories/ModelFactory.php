@@ -10,10 +10,12 @@
 | database. Just tell the factory how a default model should look.
 |
 */
+//use Faker\Factory as Faker;
+$faker = Faker\Factory::create('ru_RU');
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+
+$factory->define(App\Models\User::class, function ($faker) {
     static $password;
-
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
@@ -22,7 +24,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Product::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Products\Product::class, function ( $faker) {
     return [
         'name' => $faker->word,
         'description' => $faker->paragraph(random_int(1,10)),
@@ -34,3 +36,26 @@ $factory->define(App\Product::class, function (Faker\Generator $faker) {
         'manufacturer' => 1,
     ];
 });
+/*
+$factory->define(App\Models\Products\Manufacturer::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'Manufacturer '.$faker->word,
+        'description' => 'Manufacturer '.$faker->paragraph(random_int(1,10)),
+        'country' => 1,
+        'region' => 66,
+    ];
+});
+
+$factory->define(App\Models\Products\Vendor::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'Vendor '.$faker->word,
+        'description' => 'Vendor '.$faker->paragraph(random_int(1,10)),
+    ];
+});
+
+$factory->define(App\Models\Products\Category::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+        'description' => $faker->paragraph(random_int(1,10)),
+    ];
+});*/
