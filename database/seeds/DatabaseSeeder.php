@@ -102,6 +102,8 @@ class DatabaseSeeder extends Seeder
 		}
 
 
-		factory(\App\Product::class, 50)->create();
+		factory(\App\Models\Products\Product::class, 50)->create();
+		/*factory(\App\Models\Products\Manufacturer::class, 20)->create();
+		factory(\App\Models\Products\Vendor::class, 10)->create();*/
     }
 }

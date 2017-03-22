@@ -18,12 +18,14 @@ use Illuminate\Http\Request;
 })->middleware('auth:api');*/
 
 Route::get('/test', function(){
-   return response()->json([
-      'user' => [
+
+    Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
+    return response()->json([
+        'user' => [
           'name' => 'Nelson',
           'subname' => 'EAX'
-      ]
-   ]);
+        ]
+    ]);
 });
 Route::get('/test2', 'ProductController@index');
 
