@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        /** ПОЛЬЗОВАТЕЛИ */
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email')->unique();
@@ -57,6 +58,26 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        /** ПОЛЬЗОВАТЕЛИ БОНУСЫ */
+        Schema::create('user_points', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->decimal('inc', 10, 2)->comment('Приход');
+            $table->decimal('dec', 10, 2)->comment('Расход');
+            $table->string('destination', 255);
+            $table->timestamps();
+        });
+
+        /** ПОЛЬЗОВАТЕЛИ ДЕНЬГИ */
+        Schema::create('user_moneys', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->decimal('inc', 10, 2)->comment('Приход');
+            $table->decimal('dec', 10, 2)->comment('Расход');
+            $table->string('destination', 255);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -66,6 +87,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_points');
+        Schema::dropIfExists('user_moneys');
     }
 }
