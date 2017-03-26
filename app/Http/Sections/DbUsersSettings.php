@@ -65,7 +65,7 @@ class DbUsersSettings extends Section implements Initializable
         ->setHtmlAttribute('class', 'table-primary')
             ->setColumns(
                 AdminColumn::text('id', '#')->setWidth('150px'),
-                AdminColumn::text('surname', 'Фамилия')->setWidth('10px'),
+                AdminColumn::text('lastname', 'Фамилия')->setWidth('10px'),
                 AdminColumn::text('name', 'Имя')->setWidth('150px'),
                 AdminColumn::text('email', 'Email')->setWidth('50px'),
                 AdminColumn::text('phone', 'Тел.')->setWidth('50px'),
@@ -89,11 +89,11 @@ class DbUsersSettings extends Section implements Initializable
             $form = AdminForm::panel();
             $form->addHeader(AdminFormElement::columns()
                 ->addColumn([
-                    AdminFormElement::text('surname', 'Фамилия')->required()
+                    AdminFormElement::text('lastname', 'Фамилия')->required()
                 ], 4)->addColumn([
                     AdminFormElement::text('name', 'Имя')->required()
                 ], 4)->addColumn([
-                    AdminFormElement::text('patronymic', 'Отчество')->required()
+                    AdminFormElement::text('middlename', 'Отчество')->required()
                 ], 4)
             );
             $form->addBody([
@@ -146,11 +146,11 @@ class DbUsersSettings extends Section implements Initializable
             $form = AdminForm::panel();
             $form->addHeader(AdminFormElement::columns()
                 ->addColumn([
-                    AdminFormElement::text('surname', 'Фамилия')->required()
+                    AdminFormElement::text('lastname', 'Фамилия')->required()
                 ], 4)->addColumn([
                     AdminFormElement::text('name', 'Имя')->required()
                 ], 4)->addColumn([
-                    AdminFormElement::text('patronymic', 'Отчество')->required()
+                    AdminFormElement::text('middlename', 'Отчество')->required()
                 ], 4)
             );
             $form->addBody([

@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products\Product;
-use App\Models\Products\ProductCategory;
-use App\Models\Products\ProductPrice;
-use App\Models\Products\ProductStock;
-use App\Models\Products\Category;
-use App\Models\Products\Manufacturer;
-use App\Models\Products\Vendor;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //return Product::all();
-        return Product::all('id')->toArray();
-        //return \App\Models\Products\Product::all(); //2
+        //
     }
 
     /**

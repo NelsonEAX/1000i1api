@@ -14,7 +14,8 @@
 $faker = Faker\Factory::create('ru_RU');
 
 
-$factory->define(App\Models\User::class, function ($faker) {
+$factory->define(App\Models\User::class, function (/*Faker\Generator*/$faker) {
+
     static $password;
     return [
         'name' => $faker->name,
@@ -23,12 +24,12 @@ $factory->define(App\Models\User::class, function ($faker) {
         'remember_token' => str_random(10),
     ];
 });
-
-$factory->define(App\Models\Products\Product::class, function ( $faker) {
+/*
+$factory->define(App\Models\Products\Product::class, function ($faker) {
     return [
-        'name' => $faker->word,
-        'description' => $faker->paragraph(random_int(1,10)),
-        'model' => $faker->word,
+        'name' => 'Product '.$faker->word,
+        'description' => 'Product '.$faker->paragraph(random_int(1,10)),
+        'model' => 'Product '.$faker->word,
         'weight' => $faker->randomFloat(2, 1, 100),
         'length' => $faker->randomFloat(2, 1, 100),
         'width' => $faker->randomFloat(2, 1, 100),
@@ -36,8 +37,8 @@ $factory->define(App\Models\Products\Product::class, function ( $faker) {
         'manufacturer' => 1,
     ];
 });
-/*
-$factory->define(App\Models\Products\Manufacturer::class, function (Faker\Generator $faker) {
+
+$factory->define(App\Models\Products\Manufacturer::class, function ($faker) {
     return [
         'name' => 'Manufacturer '.$faker->word,
         'description' => 'Manufacturer '.$faker->paragraph(random_int(1,10)),
@@ -55,7 +56,7 @@ $factory->define(App\Models\Products\Vendor::class, function (Faker\Generator $f
 
 $factory->define(App\Models\Products\Category::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->word,
-        'description' => $faker->paragraph(random_int(1,10)),
+        'name' => 'Category '.$faker->word,
+        'description' => 'Category '.$faker->paragraph(random_int(1,10)),
     ];
 });*/

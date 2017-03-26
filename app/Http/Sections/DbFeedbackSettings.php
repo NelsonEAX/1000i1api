@@ -14,7 +14,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 
 class DbFeedbackSettings extends Section implements Initializable
 {
-	protected $model = '\App\Models\DbFeedback';
+	protected $model = '\App\Models\land_1000i1potolok\DbFeedback';
 	public function initialize()
 	{
 		// Добавление пункта меню и счетчика кол-ва записей в разделе

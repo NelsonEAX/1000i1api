@@ -43,7 +43,7 @@ class CreateOrdersTable extends Migration
         /** ЗАКАЗЫ ПОТОЛОК КОМПЛЕКТУЮЩИЕ */
         Schema::create('order_ceiling_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order')->index('order')->comment('Ссылка на заказ');
+            $table->integer('ceiling')->index('ceiling')->comment('Ссылка на потолок');
             $table->integer('product')->index('product')->comment('Ссылка на продукт');
             $table->decimal('count', 10, 2)->comment('Количество');
             $table->decimal('price', 10, 2)->comment('Цена');
@@ -71,7 +71,7 @@ class CreateOrdersTable extends Migration
         });
 
         /** ЗАКАЗЫ ИСТОРИЯ */
-        Schema::create('order_history', function (Blueprint $table) {
+        Schema::create('order_historys', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order')->index('order')->comment('Ссылка на заказ');
             $table->integer('user')->index('user')->comment('Ссылка на пользователя');
@@ -93,13 +93,14 @@ class CreateOrdersTable extends Migration
         /** КЛИЕНТЫ */
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('surname', 45);
+            $table->string('lastname', 45);
             $table->string('name', 45);
-            $table->string('patronymic', 45);
-            $table->string('phone', 20);
-            $table->string('email', 45);
+            $table->string('middlename', 45)->nullable();;
+            $table->date('birthday')->nullable();//->default(date("Y-m-d"));
+            $table->string('phone');
+            $table->string('email', 45)->nullable();;
             $table->string('adres', 255);
-            $table->string('comment', 2048);
+            $table->string('comment', 2048)->nullable();;
             $table->timestamps();
         });
     }
@@ -117,7 +118,7 @@ class CreateOrdersTable extends Migration
         Schema::dropIfExists('order_products');
         Schema::dropIfExists('order_states');
         Schema::dropIfExists('order_proccess');
-        Schema::dropIfExists('order_history');
+        Schema::dropIfExists('order_historys');
         Schema::dropIfExists('ceilings');
         Schema::dropIfExists('customers');
     }

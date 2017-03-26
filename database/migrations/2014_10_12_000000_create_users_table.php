@@ -22,8 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('login')->default('');//->unique();
             $table->string('photo')->nullable();
             $table->string('name')->default('');
-            $table->string('surname')->default('');
-            $table->string('patronymic')->default('');
+            $table->string('lastname')->default('');
+            $table->string('middlename')->default('');
             $table->string('phone')->default('');//->unique();
             $table->date('birthday')->default(date("Y-m-d"));
             $table->text('comment')->nullable();

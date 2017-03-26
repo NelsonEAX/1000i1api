@@ -15,7 +15,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
 class DbLandingSettings extends Section implements Initializable
 {
 	
-	protected $model = '\App\Models\DbLanding';
+	protected $model = '\App\Models\land_1000i1potolok\DbLanding';
 	public function initialize()
 	{
 		// Добавление пункта меню и счетчика кол-ва записей в разделе
