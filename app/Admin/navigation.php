@@ -29,27 +29,27 @@ return [
 	//'badge' => new Badge( \App\Models\DbLanding::count()),
 	'pages' => [
 
-			(new Page(\App\Models\DbLanding::class))
+			(new Page(\App\Models\land_1000i1potolok\DbLanding::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
 			->setTitle('Лендинги')
 			->setUrl('admin/potolok/land')
 			->setPriority(100)
-			->setBadge( new Badge( \App\Models\DbLanding::count()))
+			->setBadge( new Badge( \App\Models\land_1000i1potolok\DbLanding::count()))
 			->setAccessLogic(function (Page $page) {
 				return true;
 			}),
-			(new Page(\App\Models\DbFeedback::class))
+			(new Page(\App\Models\land_1000i1potolok\DbFeedback::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
 			->setTitle('Обратная связь')
 			->setUrl('admin/potolok/feedback')
 			->setPriority(500)
-			->setBadge( new Badge( \App\Models\DbFeedback::count()))
+			->setBadge( new Badge( \App\Models\land_1000i1potolok\DbFeedback::count()))
 			->setAccessLogic(function (Page $page) {
 				return true;
 			}),
-			(new Page(\App\Models\DbSetting::class))
+			(new Page(\App\Models\land_1000i1potolok\DbSetting::class))
 			->setPriority(10)
 			->setIcon('fa fa-user')
 			->setTitle('Настройки')
@@ -69,12 +69,12 @@ return [
 		'Priority' => 1,
 	],
 
-	(new Page(\App\Models\DbFeedback::class))
+	(new Page(\App\Models\land_1000i1potolok\DbFeedback::class))
 		->setPriority(2)
 		->setIcon('fa fa-users')
 		->setTitle('Контрагенты')
 		->setUrl('admin/users')
-		->setBadge( new Badge( \App\Models\User::count()))
+		//->setBadge( new Badge( \App\Models\User::count()))
 		->setAccessLogic(function (Page $page) {
 			return true;
 		}),

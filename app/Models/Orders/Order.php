@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Models\Products;
+namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductCategory extends Model
+class Order extends Model
 {
-    //protected $table = 'product_categories';
-
     /** The attributes that are mass assignable. */
     protected $fillable = [
 

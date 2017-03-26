@@ -46,14 +46,14 @@ class CreateProductsTable extends Migration
             $table->decimal('dealer', 10, 2)->comment('Дилерская');
             $table->decimal('retail', 10, 2)->comment('Розничная');
             $table->decimal('negotiable', 10, 2)->comment('Договорная');
-            $table->integer('percen_wholesale')->comment('Процент от закупочной для оптовой');
-            $table->integer('percen_dealer')->comment('Процент от закупочной для дилерской');
-            $table->integer('percen_retail')->comment('Процент от закупочной для розничной');
+            $table->integer('percen_wholesale')->default(0)->comment('Процент от закупочной для оптовой');
+            $table->integer('percen_dealer')->default(0)->comment('Процент от закупочной для дилерской');
+            $table->integer('percen_retail')->default(0)->comment('Процент от закупочной для розничной');
             $table->timestamps();
         });
 
         /** КАТЕГОРИЯ */
-        Schema::create('categorys', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
             $table->string('description', 2048);
@@ -61,7 +61,7 @@ class CreateProductsTable extends Migration
         });
 
         /** СВЯЗЬ ТОВАР-КАТЕГОРИЯ */
-        Schema::create('product_categorys', function (Blueprint $table) {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product')->index('product')->comment('Ссылка на продукт');
             $table->integer('category')->index('category')->comment('Ссылка на категорию');
@@ -94,12 +94,12 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
-        Schema::dropIfExists('product_categorys');
+        Schema::dropIfExists('product_categories');
         Schema::dropIfExists('product_stocks');
         Schema::dropIfExists('product_prices');
-        Schema::dropIfExists('categorys');
         Schema::dropIfExists('vendors');
         Schema::dropIfExists('manufacturers');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('products');
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
@@ -12,12 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
     	DB::table('users')->insert([
 			'login' => 'NelsonEAX',
 			'name' => 'Николай',
-			'surname' => 'Николаев',
-			'patronymic' => 'Викторович',
+			'lastname' => 'Николаев',
+			'middlename' => 'Викторович',
 			'birthday' => date('1989-08-18'),
 			'phone' => '9826892066',
 			'email' => 'nelsoneax@yandex.ru',
@@ -48,8 +48,8 @@ class DatabaseSeeder extends Seeder
 		DB::table('users')->insert([
 			'login' => 'managa',
 			'name' => 'Владимир',
-			'surname' => 'Яковлев',
-			'patronymic' => 'Олегович',
+			'lastname' => 'Яковлев',
+			'middlename' => 'Олегович',
 			'birthday' => date('1988-02-29'),
 			'phone' => '9530066436',
 			'email' => 'sistem_p@mail.ru',
@@ -83,8 +83,8 @@ class DatabaseSeeder extends Seeder
 			DB::table('users')->insert([
 				'login' => $faker->userName,
 				'name' => $faker->firstNameMale,
-				'surname' => $faker->lastName,
-				'patronymic' => $faker->middleNameMale,
+				'lastname' => $faker->lastName,
+				'middlename' => $faker->middleNameMale,
 				'birthday' => $faker->date(),
 				'phone' => $faker->phoneNumber,
 				'email' => $faker->email,
@@ -102,8 +102,23 @@ class DatabaseSeeder extends Seeder
 		}
 
 
+		/** ТОВАР */
 		factory(\App\Models\Products\Product::class, 50)->create();
-		/*factory(\App\Models\Products\Manufacturer::class, 20)->create();
-		factory(\App\Models\Products\Vendor::class, 10)->create();*/
-    }
+		factory(\App\Models\Products\Manufacturer::class, 20)->create();
+		factory(\App\Models\Products\Vendor::class, 10)->create();
+		factory(\App\Models\Products\Category::class, 10)->create();
+		factory(\App\Models\Products\ProductCategory::class, 25)->create();
+		factory(\App\Models\Products\ProductStock::class, 20)->create();
+		factory(\App\Models\Products\ProductPrice::class, 50)->create();
+
+
+		/** ЗАКАЗЫ */
+		factory(\App\Models\Orders\Customer::class, 30)->create();
+		factory(\App\Models\Orders\Order::class, 30)->create();
+		factory(\App\Models\Orders\Ceiling::class, 30)->create();
+		factory(\App\Models\Orders\OrderCeiling::class, 30)->create();
+		factory(\App\Models\Orders\OrderCeilingProduct::class, 30)->create();
+		factory(\App\Models\Orders\OrderProduct::class, 30)->create();
+
+	}
 }

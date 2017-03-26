@@ -5,7 +5,7 @@
  * Date: Sun, 04 Dec 2016 18:10:19 +0000.
  */
 
-namespace App\Models;
+namespace App\Models\land_1000i1potolok;
 
 //use Reliese\Database\Eloquent\Model as Eloquent;
 use Illuminate\Database\Eloquent\Model as Eloquent;

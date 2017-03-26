@@ -100,8 +100,8 @@ class UserController extends Controller
                 'user' => [
                     'login'         => $user->login,
                     'name'          => $user->name,
-                    'surname'       => $user->surname,
-                    'patronymic'    => $user->patronymic,
+                    'lastname'      => $user->lastname,
+                    'middlename'    => $user->middlename,
                     'phone'         => $user->phone,
                     'email'         => $user->email,
                     'photo'         => $user->photo,
