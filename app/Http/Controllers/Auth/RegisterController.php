@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use DB;
 //use Mail;
 use Validator;
-use App\Models\User;
+use App\Models\Users\User;
 use App\Mail\EmailVerification;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;

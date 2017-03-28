@@ -37,7 +37,7 @@ $factory->define(Customer::class, function (Faker\Generator $faker) {
 $factory->define(Order::class, function (Faker\Generator $faker) {
     return [
         'customer' => $faker->randomElement(Customer::pluck('id')->toArray()),
-        'user' => $faker->randomElement(App\Models\User::pluck('id')->toArray()),
+        'user' => $faker->randomElement(App\Models\Users\User::pluck('id')->toArray()),
     ];
 });
 
@@ -77,73 +77,6 @@ $factory->define(OrderCeilingProduct::class, function (Faker\Generator $faker) {
         'count' => $count,
         'price' => $price,
         'total' => $price*$count,
-    ];
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-$factory->define(Category::class, function (Faker\Generator $faker) {
-    return [
-        'name' => 'Category '.$faker->word,
-        'description' => 'Category '.$faker->paragraph(random_int(1,10)),
-    ];
-});
-
-$factory->define(ProductCategory::class, function (Faker\Generator $faker) {
-    return [
-        'product' => $faker->randomElement(Product::pluck('id')->toArray()),
-        'category' => $faker->randomElement(Category::pluck('id')->toArray()),
-    ];
-});
-
-$factory->define(Manufacturer::class, function (Faker\Generator$faker) {
-    return [
-        'name' => 'Manufacturer '.$faker->word,
-        'description' => 'Manufacturer '.$faker->paragraph(random_int(1,10)),
-        'country' => 1,
-        'region' => 66,
-    ];
-});
-
-$factory->define(Vendor::class, function (Faker\Generator $faker) {
-    return [
-        'name' => 'Vendor '.$faker->word,
-        'description' => 'Vendor '.$faker->paragraph(random_int(1,10)),
-    ];
-});
-
-$factory->define(ProductStock::class, function (Faker\Generator $faker) {
-    return [
-        'product' => $faker->randomElement(Product::pluck('id')->toArray()),
-        'arrival' => $faker->randomDigitNotNull,
-        'selling' => $faker->randomDigitNotNull,
-        'vendor' => $faker->randomElement(Vendor::pluck('id')->toArray()),
-    ];
-});
-
-$factory->define(ProductPrice::class, function (Faker\Generator $faker) {
-    $price = $faker->randomFloat(2, 1, 100);
-    return [
-        'product' => $faker->randomElement(Product::pluck('id')->toArray()),
-        'purchase' => $price,
-        'wholesale' => $price + 10,
-        'dealer' => $price + 30,
-        'retail' => $price + 50,
-        'negotiable' => $price + 20,
     ];
 });
 

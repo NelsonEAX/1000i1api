@@ -2,7 +2,7 @@
 
 use App\Models\DbLanding;
 use App\Mail\EmailVerification;
-use App\Models\User;
+use App\Models\Users\User;
 use Illuminate\Support\Facades\Auth;
 //use Mail;
 /*

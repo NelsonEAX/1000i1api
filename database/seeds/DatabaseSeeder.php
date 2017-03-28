@@ -120,5 +120,12 @@ class DatabaseSeeder extends Seeder
 		factory(\App\Models\Orders\OrderCeilingProduct::class, 30)->create();
 		factory(\App\Models\Orders\OrderProduct::class, 30)->create();
 
+
+		/** ХРАНИЛИЩЕ */
+		factory(\App\Models\Storages\Storage::class, 40)->create();
+		factory(\App\Models\Storages\StorageCategory::class, 10)->create();
+		factory(\App\Models\Storages\StorageOrder::class, 10)->create();
+		factory(\App\Models\Storages\StorageProduct::class, 10)->create();
+		factory(\App\Models\Storages\StorageUser::class, 10)->create();
 	}
 }
