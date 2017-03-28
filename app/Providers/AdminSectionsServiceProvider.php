@@ -14,7 +14,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        \App\Models\User::class => 'App\Http\Sections\DbUsersSettings',
+        \App\Models\Users\User::class => 'App\Http\Sections\DbUsersSettings',
         \App\Models\land_1000i1potolok\DbLanding::class  => 'App\Http\Sections\DbLandingSettings',
         \App\Models\land_1000i1potolok\DbFeedback::class  => 'App\Http\Sections\DbFeedbackSettings'/*,
         \App\Models\land_1000i1potolok\DbSetting::class  => 'App\Http\Sections\DbSettingSettings'*/

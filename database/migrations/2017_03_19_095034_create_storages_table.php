@@ -49,7 +49,7 @@ class CreateStoragesTable extends Migration
         });
 
         /** ХРАНИЛИЩЕ ФАЙЛОВ КАТЕГОРИЙ */
-        Schema::create('storage_categorys', function (Blueprint $table) {
+        Schema::create('storage_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('storage')->index('storage')->comment('Ссылка на хранилище');
             $table->integer('category')->index('category')->comment('Ссылка на категорию товара');
@@ -68,6 +68,6 @@ class CreateStoragesTable extends Migration
         Schema::dropIfExists('storage_users');
         Schema::dropIfExists('storage_orders');
         Schema::dropIfExists('storage_products');
-        Schema::dropIfExists('storage_categorys');
+        Schema::dropIfExists('storage_categories');
     }
 }
