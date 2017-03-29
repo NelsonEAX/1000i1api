@@ -77,6 +77,38 @@ class DatabaseSeeder extends Seeder
 			'created_at' => \Carbon\Carbon::now(),
 			'updated_at' => \Carbon\Carbon::now()
 		]);
+		DB::table('users')->insert([
+			'login' => 'tester',
+			'name' => 'Владимир',
+			'lastname' => 'Яковлев',
+			'middlename' => 'Олегович',
+			'birthday' => date('1999-01-01'),
+			'phone' => '9876543210',
+			'email' => 'email@test.ru',
+			'password' => bcrypt('1234abcd'),
+			'comment' => 'comment',
+			'is_eax' => false,
+			'is_admin' => true,
+			'is_private' => true,
+			'is_legal' => true,
+			'is_manager' => true,
+			'is_manager_production' => true,
+			'is_cutter' => true,
+			'is_shareholder' => true,
+			'is_storekeeper' => true,
+			'is_dealer' => true,
+			'is_franchise' => true,
+			'is_agent' => true,
+			'is_related' => true,
+			'is_measurer' => true,
+			'is_installer' => true,
+			'is_delivery_city' => true,
+			'is_delivery_region' => true,
+			'is_confirmed' => true,
+			'remember_token' => true,
+			'created_at' => \Carbon\Carbon::now(),
+			'updated_at' => \Carbon\Carbon::now()
+		]);
 
 		$faker = Faker::create('ru_RU');
 		for ($i = 0; $i < 10; $i++){
