@@ -3,6 +3,14 @@
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
+     * composer global require phpunit/phpunit
+     * composer global require phpunit/dbunit
+     *
+     * php vendor/phpunit/phpunit/phpunit
+     */
+
+
+    /**
      * The base URL to use while testing the application.
      *
      * @var string
