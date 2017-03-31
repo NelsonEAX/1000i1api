@@ -133,31 +133,32 @@ class DatabaseSeeder extends Seeder
 			]);
 		}
 
-
-		/** ТОВАР */
-		factory(\App\Models\Products\Product::class, 50)->create();
-		factory(\App\Models\Products\Manufacturer::class, 20)->create();
-		factory(\App\Models\Products\Vendor::class, 10)->create();
-		factory(\App\Models\Products\Category::class, 10)->create();
-		factory(\App\Models\Products\ProductCategory::class, 25)->create();
-		factory(\App\Models\Products\ProductStock::class, 20)->create();
-		factory(\App\Models\Products\ProductPrice::class, 50)->create();
-
-
-		/** ЗАКАЗЫ */
-		factory(\App\Models\Orders\Customer::class, 30)->create();
-		factory(\App\Models\Orders\Order::class, 30)->create();
-		factory(\App\Models\Orders\Ceiling::class, 30)->create();
-		factory(\App\Models\Orders\OrderCeiling::class, 30)->create();
-		factory(\App\Models\Orders\OrderCeilingProduct::class, 30)->create();
-		factory(\App\Models\Orders\OrderProduct::class, 30)->create();
+		if (\App::environment() !== 'production') {
+			/** ТОВАР */
+			factory(\App\Models\Products\Product::class, 50)->create();
+			factory(\App\Models\Products\Manufacturer::class, 20)->create();
+			factory(\App\Models\Products\Vendor::class, 10)->create();
+			factory(\App\Models\Products\Category::class, 10)->create();
+			factory(\App\Models\Products\ProductCategory::class, 25)->create();
+			factory(\App\Models\Products\ProductStock::class, 20)->create();
+			factory(\App\Models\Products\ProductPrice::class, 50)->create();
 
 
-		/** ХРАНИЛИЩЕ */
-		factory(\App\Models\Storages\Storage::class, 40)->create();
-		factory(\App\Models\Storages\StorageCategory::class, 10)->create();
-		factory(\App\Models\Storages\StorageOrder::class, 10)->create();
-		factory(\App\Models\Storages\StorageProduct::class, 10)->create();
-		factory(\App\Models\Storages\StorageUser::class, 10)->create();
+			/** ЗАКАЗЫ */
+			factory(\App\Models\Orders\Customer::class, 30)->create();
+			factory(\App\Models\Orders\Order::class, 30)->create();
+			factory(\App\Models\Orders\Ceiling::class, 30)->create();
+			factory(\App\Models\Orders\OrderCeiling::class, 30)->create();
+			factory(\App\Models\Orders\OrderCeilingProduct::class, 30)->create();
+			factory(\App\Models\Orders\OrderProduct::class, 30)->create();
+
+
+			/** ХРАНИЛИЩЕ */
+			factory(\App\Models\Storages\Storage::class, 40)->create();
+			factory(\App\Models\Storages\StorageCategory::class, 10)->create();
+			factory(\App\Models\Storages\StorageOrder::class, 10)->create();
+			factory(\App\Models\Storages\StorageProduct::class, 10)->create();
+			factory(\App\Models\Storages\StorageUser::class, 10)->create();
+		}
 	}
 }

@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 
 Route::get('/test', function(){
 
-    Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
+    //Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
     return response()->json([
         'user' => [
           'name' => 'Nelson',
@@ -29,10 +29,14 @@ Route::get('/test', function(){
 });
 Route::get('/test2', 'ProductController@index');
 
+
+
 Route::post('/register', 'Auth\RegisterController@apiRegister');
 Route::get('/register/confirm/{token}', 'Auth\RegisterController@apiConfirm');
 Route::get('/setting/vue/server', 'Vue\SettingsController@server');
 Route::get('/setting/vue/secret', 'Vue\SettingsController@secret');
+
+
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('/user', 'UserController@getInfo');
