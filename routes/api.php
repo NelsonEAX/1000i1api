@@ -16,19 +16,32 @@ use Illuminate\Http\Request;
 /*Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');*/
+if (\App::environment() !== 'production') {
 
-Route::get('/test', function(){
+    Route::get('/test', function () {
 
-    //Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
-    return response()->json([
-        'user' => [
-          'name' => 'Nelson',
-          'subname' => 'EAX'
-        ]
-    ]);
-});
-Route::get('/test2', 'ProductController@index');
+        //Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
+        return response()->json([
+            'user' => [
+                'name' => 'Nelson',
+                'subname' => 'EAX'
+            ]
+        ]);
+    });
+    Route::get('/test/clear', function () {
 
+        \App\Models\Users\User::where('email', '=', 'email@test.ru')->delete();
+        //Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
+        return response()->json([
+            'user' => [
+                'name' => 'Nelson',
+                'subname' => 'EAX'
+            ]
+        ]);
+    });
+    Route::get('/test2', 'ProductController@index');
+
+}
 
 
 Route::post('/register', 'Auth\RegisterController@apiRegister');
