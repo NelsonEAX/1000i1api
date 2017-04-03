@@ -16,4 +16,14 @@ class StorageProduct extends Model
         'created_at',
         'updated_at',
     ];
+
+   /* public function storage()
+    {
+        return $this->hasOne('App\Models\Storages\Storage', 'id', 'storage');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Products\Product', 'id', 'product');
+    }*/
 }
