@@ -104,14 +104,27 @@ class ProductController extends Controller
             c.`id`,
             c.`name`,
             c.`description`,
-            s.`path`,
-            s.`uuid`,
-            s.`extension`
+            CONCAT(
+                \'[\',
+                GROUP_CONCAT(
+                    CONCAT(\'{"img":"\', s.`path`, \'/\', s.`uuid`, \'.\', s.`extension`, \'"}\') 
+                    ORDER BY s.`uuid` ASC 
+                    SEPARATOR \',\'
+                ),
+                \']\' 
+            ) as `imgs`
             FROM `categories` c
             LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
-            LEFT JOIN `storages` s ON s.`id` = sc.`storage` 
+            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
+            WHERE c.`enable` = true
+            GROUP BY c.`id`,
+            c.`name`,
+            c.`description`
+            ORDER BY c.`order`
         ');
 
+
+        //print_r($products);
         return response()->json($products);
     }
     
@@ -152,14 +165,35 @@ class ProductController extends Controller
             pp.`percen_wholesale`,
             pp.`percen_dealer`,
             pp.`percen_retail`,
-            s.`path`,
-            s.`uuid`,
-            s.`extension`
+            CONCAT(
+                \'[\',
+                GROUP_CONCAT(
+                    CONCAT(\'{"img":"\', s.`path`, \'/\', s.`uuid`, \'.\', s.`extension`, \'"}\') 
+                    ORDER BY s.`uuid` ASC 
+                    SEPARATOR \',\'
+                ),
+                \']\' 
+            ) as `imgs`
             FROM  `products` p
             LEFT JOIN `product_categories` pc ON pc.`product` = p.`id` 
             LEFT JOIN `storage_products` sp ON sp.`product` = p.`id` 
             LEFT JOIN `storages` s ON s.`id` = sp.`storage` 
             LEFT JOIN `product_prices` pp ON pp.`product` = p.`id` and pp.`id` = (SELECT max(id) FROM `product_prices` WHERE `product` = p.`id`)
+            WHERE p.`enable` = true
+            GROUP BY p.`id`,
+            p.`name`,
+            p.`description`,
+            p.`model`,
+            pc.`category`,
+            pp.`purchase`,
+            pp.`wholesale`,
+            pp.`dealer`,
+            pp.`retail`,
+            pp.`negotiable`,
+            pp.`percen_wholesale`,
+            pp.`percen_dealer`,
+            pp.`percen_retail`
+            ORDER BY p.`order`
         ');
 
         return response()->json($products);
