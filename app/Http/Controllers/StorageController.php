@@ -86,4 +86,96 @@ class StorageController extends Controller
     {
         //
     }
+
+    /**
+     * Return image from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getImageFromParam($filename, $params)
+    {
+        $width = $this->getWidth($params);
+        $height = $this->getHeight($params);
+        $extension = $this->getExtension($params);
+        $thumbnail = '';
+        $size = '';
+
+        if( $width && $height ){
+            $thumbnail = 'thumbnails/';
+            $size = '_'.$width.'x'.$height;
+        }
+
+        $storage_file = public_path('storage/'.$thumbnail.$filename.$size.$extension);
+        $origin_file = public_path('storage/'.$filename.$extension);
+        /**return response()->json([
+            'storage' => [
+                'name' => $filename,
+                'params' => $params,
+                'width' => $width ,
+                'height' => $height,
+                'extension' => $extension,
+                'thumbnail' => $thumbnail,
+                'size' => $size,
+                'filename' => $storage_file,
+                'origin_file' => $origin_file
+            ]
+        ]);*/
+        if( \File::exists( $storage_file ) ){
+            return \Image::make( $storage_file )
+                ->response();
+        } else {
+            return \Image::make( $origin_file )
+                ->resize( $width, $height )
+                ->save( $storage_file )
+                ->response();
+        }
+    }
+
+    /**
+     * Return $extension from $params.
+     *
+     * @param  string  $params
+     * @return $extension
+     */
+    protected function getExtension($params){
+        $pos = strrpos( $params, '.' );
+        if ( $pos >= 0 ) {
+            return substr( $params, $pos );
+        } else {
+            return '';
+        }
+    }
+
+    /**
+     * Return $width from $params.
+     *
+     * @param  string  $params
+     * @return $width
+     */
+    protected function getWidth($params){
+        $pos_th = strrpos( $params, 'th' );
+        $pos_x = strrpos( $params, 'x' );
+        if ( $pos_th >= 0 && $pos_x >= 0 && $pos_x > $pos_th ) {
+            return substr( $params, $pos_th + 2, $pos_x - $pos_th - 2 );
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Return $height from $params.
+     *
+     * @param  string  $params
+     * @return $height
+     */
+    protected function getHeight($params){
+        $pos_x = strrpos( $params, 'x' );
+        $pos_p = strrpos( $params, '.' );
+        if ( $pos_p > 0 && $pos_x >= 0 && $pos_p > $pos_x ) {
+            return substr( $params, $pos_x + 1, $pos_p - $pos_x - 1 );
+        } else {
+            return null;
+        }
+    }
 }
