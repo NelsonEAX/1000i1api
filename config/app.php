@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * SleepingOwl Service Provider
@@ -244,6 +245,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     	'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

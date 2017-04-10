@@ -99,7 +99,7 @@ class ProductController extends Controller
      */
     public function categories()
     {
-        $products = \DB::select('
+        $categories = \DB::select('
             SELECT
             c.`id`,
             c.`name`,
@@ -107,7 +107,7 @@ class ProductController extends Controller
             CONCAT(
                 \'[\',
                 GROUP_CONCAT(
-                    CONCAT(\'{"img":"\', s.`path`, \'/\', s.`uuid`, \'.\', s.`extension`, \'"}\') 
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "ext":"\', s.`extension`, \'"}\') 
                     ORDER BY s.`uuid` ASC 
                     SEPARATOR \',\'
                 ),
@@ -123,9 +123,11 @@ class ProductController extends Controller
             ORDER BY c.`order`
         ');
 
-
-        //print_r($products);
-        return response()->json($products);
+        foreach($categories as $category)
+        {
+            $category->imgs = json_decode($category->imgs);
+        }
+        return response()->json($categories);
     }
     
     /**
@@ -168,7 +170,7 @@ class ProductController extends Controller
             CONCAT(
                 \'[\',
                 GROUP_CONCAT(
-                    CONCAT(\'{"img":"\', s.`path`, \'/\', s.`uuid`, \'.\', s.`extension`, \'"}\') 
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "ext":"\', s.`extension`, \'"}\') 
                     ORDER BY s.`uuid` ASC 
                     SEPARATOR \',\'
                 ),
@@ -196,6 +198,10 @@ class ProductController extends Controller
             ORDER BY p.`order`
         ');
 
+        foreach($products as $product)
+        {
+            $product->imgs = json_decode($product->imgs);
+        }
         return response()->json($products);
     }
 }
