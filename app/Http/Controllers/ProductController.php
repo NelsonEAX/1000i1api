@@ -92,12 +92,12 @@ class ProductController extends Controller
     }
 
     /**
-     * Get all categories.
+     * Get all categories with descriptions and image.
      *
      * @param
      * @return \Illuminate\Http\Response
      */
-    public function categories()
+    public function categories_full()
     {
         $categories = \DB::select('
             SELECT
@@ -107,7 +107,7 @@ class ProductController extends Controller
             CONCAT(
                 \'[\',
                 GROUP_CONCAT(
-                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "ext":"\', s.`extension`, \'"}\') 
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "dir":"categories/", "ext":"\', s.`extension`, \'"}\') 
                     ORDER BY s.`uuid` ASC 
                     SEPARATOR \',\'
                 ),
@@ -129,7 +129,31 @@ class ProductController extends Controller
         }
         return response()->json($categories);
     }
-    
+
+    /**
+     * Get all categories.
+     *
+     * @param
+     * @return \Illuminate\Http\Response
+     */
+    public function categories()
+    {
+        $categories = \DB::select('
+            SELECT
+            c.`id`,
+            c.`name`
+            FROM `categories` c
+            LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
+            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
+            WHERE c.`enable` = true
+            GROUP BY c.`id`,
+            c.`name`
+            ORDER BY c.`order`
+        ');
+
+        return response()->json($categories);
+    }
+
     /**
      * Get all products.
      *
@@ -170,7 +194,7 @@ class ProductController extends Controller
             CONCAT(
                 \'[\',
                 GROUP_CONCAT(
-                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "ext":"\', s.`extension`, \'"}\') 
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "dir":"products/", "ext":"\', s.`extension`, \'"}\') 
                     ORDER BY s.`uuid` ASC 
                     SEPARATOR \',\'
                 ),
