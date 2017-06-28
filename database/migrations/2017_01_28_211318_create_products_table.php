@@ -18,12 +18,15 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', 255)->index('name');
             $table->string('description', 2048);
-            $table->string('model', 45)->index('model');
-            $table->decimal('weight', 10, 6)->comment('Вес');
-            $table->decimal('length', 10, 6)->comment('Длина');
-            $table->decimal('width', 10, 6)->comment('Ширина');
-            $table->decimal('height', 10, 6)->comment('Высота');
-            $table->integer('manufacturer')->index('manufacturer')->comment('Ссылка на производителя');
+            $table->string('model', 45)->nullable()->index('model');
+            $table->string('color', 45)->nullable()->comment('Цвет');
+            $table->decimal('weight', 10, 6)->nullable()->comment('Вес');
+            $table->decimal('length', 10, 6)->nullable()->comment('Длина');
+            $table->decimal('width', 10, 6)->nullable()->comment('Ширина');
+            $table->decimal('height', 10, 6)->nullable()->comment('Высота');
+            $table->integer('manufacturer')->nullable()->index('manufacturer')->comment('Ссылка на производителя');
+            $table->integer('order')->default(100)->comment('Порядок');
+            $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
         });
 
@@ -57,6 +60,8 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('description', 2048);
+            $table->integer('order')->default(100)->comment('Порядок');
+            $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
         });
 
