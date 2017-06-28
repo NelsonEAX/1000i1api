@@ -56,8 +56,9 @@ Route::get('/setting/vue/server', 'Vue\SettingsController@server');
 Route::get('/setting/vue/secret', 'Vue\SettingsController@secret');
 
 /** Выдача изображений и их искизов */
-Route::get('/image/{filename}{params}', 'StorageController@getImageFromParam')
+Route::get('/image/{dir}/{filename}{params}', 'StorageController@getImageFromParam')
     ->where([
+        //'dir' => 'users|orders|products|categories',
         'filename' => '[0-9A-Fa-f]{8}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{4}\-[0-9A-Fa-f]{12}',
         'params' => '(th\d{1,5}x\d{1,5})?\.[a-zA-Z0-9]{1,10}'
     ]);;

@@ -93,7 +93,7 @@ class StorageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function getImageFromParam($filename, $params)
+    public function getImageFromParam($dir, $filename, $params)
     {
         $width = $this->getWidth($params);
         $height = $this->getHeight($params);
@@ -106,8 +106,8 @@ class StorageController extends Controller
             $size = '_'.$width.'x'.$height;
         }
 
-        $storage_file = public_path('storage/'.$thumbnail.$filename.$size.$extension);
-        $origin_file = public_path('storage/'.$filename.$extension);
+        $storage_file = public_path('storage/'.$dir.'/'.$thumbnail.$filename.$size.$extension);
+        $origin_file = public_path('storage/'.$dir.'/'.$filename.$extension);
         /**return response()->json([
             'storage' => [
                 'name' => $filename,
