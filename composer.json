@@ -11,7 +11,8 @@
         "graham-campbell/exceptions": "^9.1",
         "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-cors": "^0.8.5",
-        "laravel/passport": "v1.0.9"
+        "laravel/passport": "v1.0.9",
+        "intervention/image": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

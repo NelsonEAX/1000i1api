@@ -108,7 +108,7 @@ class DbUsersSettings extends Section implements Initializable
                 ], 4)->addColumn([
                     AdminFormElement::text('phone', 'Телефон')->required()
                         ->addValidationRule('unique:users,phone,'.$id, 'Этот номер телефона уже занят, пробуй еще!')
-                        ->addValidationRule('regex:/^\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
+                        ->addValidationRule('regex:/^\+7\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
                 ], 4),
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),

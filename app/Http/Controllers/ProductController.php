@@ -90,4 +90,142 @@ class ProductController extends Controller
     {
         //
     }
+
+    /**
+     * Get all categories with descriptions and image.
+     *
+     * @param
+     * @return \Illuminate\Http\Response
+     */
+    public function categories_full()
+    {
+        $categories = \DB::select('
+            SELECT
+            c.`id`,
+            c.`name`,
+            c.`description`,
+            CONCAT(
+                \'[\',
+                GROUP_CONCAT(
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "dir":"categories/", "ext":"\', s.`extension`, \'"}\') 
+                    ORDER BY s.`uuid` ASC 
+                    SEPARATOR \',\'
+                ),
+                \']\' 
+            ) as `imgs`
+            FROM `categories` c
+            LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
+            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
+            WHERE c.`enable` = true
+            GROUP BY c.`id`,
+            c.`name`,
+            c.`description`
+            ORDER BY c.`order`
+        ');
+
+        foreach($categories as $category)
+        {
+            $category->imgs = json_decode($category->imgs);
+        }
+        return response()->json($categories);
+    }
+
+    /**
+     * Get all categories.
+     *
+     * @param
+     * @return \Illuminate\Http\Response
+     */
+    public function categories()
+    {
+        $categories = \DB::select('
+            SELECT
+            c.`id`,
+            c.`name`
+            FROM `categories` c
+            LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
+            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
+            WHERE c.`enable` = true
+            GROUP BY c.`id`,
+            c.`name`
+            ORDER BY c.`order`
+        ');
+
+        return response()->json($categories);
+    }
+
+    /**
+     * Get all products.
+     *
+     * @param
+     * @return \Illuminate\Http\Response
+     */
+    public function products()
+    {
+       // $products = Product::storage::find(6);
+        /*$products = \DB::table('products')
+            ->leftJoin('storage_products', 'products.id', '=', 'storage_products.product')
+            ->leftJoin('storages', 'storages.id', '=', 'storage_products.storage')
+            ->select(
+                'products.name',
+                'products.description',
+                'products.model',
+                'storages.path',
+                'storages.uuid',
+                'storages.extension'
+            )
+            ->get();*/
+        
+        $products = \DB::select('
+            SELECT
+            p.`id`,
+            p.`name`,
+            p.`description`,
+            p.`model`,
+            pc.`category`,
+            pp.`purchase`,
+            pp.`wholesale`,
+            pp.`dealer`,
+            pp.`retail`,
+            pp.`negotiable`,
+            pp.`percen_wholesale`,
+            pp.`percen_dealer`,
+            pp.`percen_retail`,
+            CONCAT(
+                \'[\',
+                GROUP_CONCAT(
+                    CONCAT(\'{"name":"\', /*s.`path`, \'/\',*/ s.`uuid`, \'", "dir":"products/", "ext":"\', s.`extension`, \'"}\') 
+                    ORDER BY s.`uuid` ASC 
+                    SEPARATOR \',\'
+                ),
+                \']\' 
+            ) as `imgs`
+            FROM  `products` p
+            LEFT JOIN `product_categories` pc ON pc.`product` = p.`id` 
+            LEFT JOIN `storage_products` sp ON sp.`product` = p.`id` 
+            LEFT JOIN `storages` s ON s.`id` = sp.`storage` 
+            LEFT JOIN `product_prices` pp ON pp.`product` = p.`id` and pp.`id` = (SELECT max(id) FROM `product_prices` WHERE `product` = p.`id`)
+            WHERE p.`enable` = true
+            GROUP BY p.`id`,
+            p.`name`,
+            p.`description`,
+            p.`model`,
+            pc.`category`,
+            pp.`purchase`,
+            pp.`wholesale`,
+            pp.`dealer`,
+            pp.`retail`,
+            pp.`negotiable`,
+            pp.`percen_wholesale`,
+            pp.`percen_dealer`,
+            pp.`percen_retail`
+            ORDER BY p.`order`
+        ');
+
+        foreach($products as $product)
+        {
+            $product->imgs = json_decode($product->imgs);
+        }
+        return response()->json($products);
+    }
 }
