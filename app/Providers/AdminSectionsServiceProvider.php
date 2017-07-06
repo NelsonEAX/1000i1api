@@ -14,10 +14,20 @@ class AdminSectionsServiceProvider extends ServiceProvider
      * @var array
      */
     protected $sections = [
-        \App\Models\Users\User::class => 'App\Http\Sections\DbUsersSettings',
-        \App\Models\land_1000i1potolok\DbLanding::class  => 'App\Http\Sections\DbLandingSettings',
-        \App\Models\land_1000i1potolok\DbFeedback::class  => 'App\Http\Sections\DbFeedbackSettings'/*,
-        \App\Models\land_1000i1potolok\DbSetting::class  => 'App\Http\Sections\DbSettingSettings'*/
+        //Users
+        \App\Models\Users\User::class => 'App\Http\Sections\Users\Users',
+        //Products
+        \App\Models\Products\Category::class => 'App\Http\Sections\Products\Category',
+        \App\Models\Products\Product::class => 'App\Http\Sections\Products\Product',
+        //Orders
+
+        //Storage
+
+
+        //Landings
+        \App\Models\land_1000i1potolok\DbLanding::class  => 'App\Http\Sections\Land1000i1Potolok\DbLandingSettings',
+        \App\Models\land_1000i1potolok\DbFeedback::class  => 'App\Http\Sections\Land1000i1Potolok\DbFeedbackSettings'/*,
+        \App\Models\land_1000i1potolok\DbSetting::class  => 'App\Http\Sections\Land1000i1Potolok\DbSettingSettings'*/
     ];
 
     /**
@@ -27,7 +37,7 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     public function boot(\SleepingOwl\Admin\Admin $admin)
     {
-    	//
+        //
 
         parent::boot($admin);
         
@@ -38,34 +48,34 @@ class AdminSectionsServiceProvider extends ServiceProvider
     
     private function registerNavigation()
     {
-    	\AdminNavigation::setFromArray([
-    		[
-    			'title' => trans('core.title.organisation'),
-    			'icon' => 'fa fa-group',
-    			'priority' => 1000,
-    			'pages' => [
-    					(new Page(\App\Models\DbLanding::class))->setPriority(0)
-    			]
-    		]
-    	]);
+        \AdminNavigation::setFromArray([
+            [
+                'title' => trans('core.title.organisation'),
+                'icon' => 'fa fa-group',
+                'priority' => 1000,
+                'pages' => [
+                        (new Page(\App\Models\DbLanding::class))->setPriority(0)
+                ]
+            ]
+        ]);
     }
     
     private function registerNRoutes()
     {
-    	$this->app['router']->group([
-    			'prefix' => config('sleeping_owl.url_prefix'),
-    			'middleware' => config('sleeping_owl.middleware')],
-    			function ($router) {
-		    		$router->get('', ['as' => 'admin.dashboard', function () {
-		    			$content = 'Define your dashboard here2323.';
-		    			return AdminSection::view($content, 'Dashboard2');
-    		}]);
-    	});
+        $this->app['router']->group([
+            'prefix' => config('sleeping_owl.url_prefix'),
+            'middleware' => config('sleeping_owl.middleware')],
+            function ($router) {
+                $router->get('', ['as' => 'admin.dashboard', function () {
+                    $content = 'Define your dashboard here2323.';
+                    return AdminSection::view($content, 'Dashboard2');
+                }]);
+        });
     }
     
     private function registerMediaPackages()
     {
-    	PackageManager::add('front.controllers')
-    	->js(null, asset('js/controllers.js'));
+        PackageManager::add('front.controllers')
+        ->js(null, asset('js/controllers.js'));
     }
 }
