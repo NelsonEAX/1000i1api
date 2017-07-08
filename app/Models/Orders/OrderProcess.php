@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Storages;
+namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StorageCategory extends Model
+class OrderProcess extends Model
 {
     /** The attributes that are mass assignable. */
     protected $fillable = [
