@@ -22,9 +22,9 @@ class Product extends Model
         return $this->hasMany('App\Models\Storages\StorageProduct', 'product', 'id' );
     }*/
 
-    public function storage()
+    /*public function storage()
     {
         return $this->hasManyThrough('App\Models\Storages\Storage', 'App\Models\Storages\StorageProduct',
             'product', 'id', 'id' );
-    }
+    }*/
 }

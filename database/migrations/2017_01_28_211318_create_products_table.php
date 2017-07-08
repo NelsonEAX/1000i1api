@@ -16,6 +16,8 @@ class CreateProductsTable extends Migration
         /** ТОВАР */
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('category_id')->index('category_id')->comment('Ссылка на категорию');
+            $table->integer('manufacturer_id')->nullable()->index('manufacturer_id')->comment('Ссылка на производителя');
             $table->string('name', 255)->index('name');
             $table->string('description', 2048);
             $table->string('model', 45)->nullable()->index('model');
@@ -24,8 +26,7 @@ class CreateProductsTable extends Migration
             $table->decimal('length', 10, 6)->nullable()->comment('Длина');
             $table->decimal('width', 10, 6)->nullable()->comment('Ширина');
             $table->decimal('height', 10, 6)->nullable()->comment('Высота');
-            $table->integer('manufacturer')->nullable()->index('manufacturer')->comment('Ссылка на производителя');
-            $table->integer('order')->default(100)->comment('Порядок');
+            $table->integer('orderby')->default(100)->comment('Порядок');
             $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
         });
@@ -33,7 +34,7 @@ class CreateProductsTable extends Migration
         /** ТОВАР НА СКЛАДЕ */
         Schema::create('product_stocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product')->index('product')->comment('Ссылка на продукт');
+            $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
             $table->integer('arrival')->comment('Приход, количество');
             $table->integer('selling')->comment('Расход, количество');
             $table->integer('vendor')->index('vendor')->comment('Ссылка на поставщика');
@@ -43,7 +44,7 @@ class CreateProductsTable extends Migration
         /** ТОВАР ЦЕНЫ */
         Schema::create('product_prices', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product')->index('product')->comment('Ссылка на продукт');
+            $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
             $table->decimal('purchase', 10, 2)->comment('Закупочная');
             $table->decimal('wholesale', 10, 2)->comment('Оптовая');
             $table->decimal('dealer', 10, 2)->comment('Дилерская');
@@ -60,18 +61,18 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('description', 2048);
-            $table->integer('order')->default(100)->comment('Порядок');
+            $table->integer('orderby')->default(100)->comment('Порядок');
             $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
         });
 
         /** СВЯЗЬ ТОВАР-КАТЕГОРИЯ */
-        Schema::create('product_categories', function (Blueprint $table) {
+        /*Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product')->index('product')->comment('Ссылка на продукт');
             $table->integer('category')->index('category')->comment('Ссылка на категорию');
             $table->timestamps();
-        });
+        });*/
 
         /** ПРОИЗВОДИТЕЛЬ */
         Schema::create('manufacturers', function (Blueprint $table) {
@@ -99,7 +100,7 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_categories');
+        //Schema::dropIfExists('product_categories');
         Schema::dropIfExists('product_stocks');
         Schema::dropIfExists('product_prices');
         Schema::dropIfExists('vendors');

@@ -4,8 +4,10 @@ namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderHistory extends Model
+class CeilingProduct extends Model
 {
+    protected $table = 'ceiling_product';
+    
     /** The attributes that are mass assignable. */
     protected $fillable = [
 

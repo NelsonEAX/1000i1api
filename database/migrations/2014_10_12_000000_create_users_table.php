@@ -21,8 +21,8 @@ class CreateUsersTable extends Migration
 
             $table->string('login')->default('');//->unique();
             $table->string('photo')->nullable();
-            $table->string('name')->default('');
             $table->string('lastname')->default('');
+            $table->string('name')->default('');
             $table->string('middlename')->default('');
             $table->string('phone')->default('');//->unique();
             $table->date('birthday')->default(date("Y-m-d"));
@@ -62,7 +62,7 @@ class CreateUsersTable extends Migration
         /** ПОЛЬЗОВАТЕЛИ БОНУСЫ */
         Schema::create('user_points', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->integer('user_id')->index('user_id')->comment('Ссылка на пользователя');
             $table->decimal('inc', 10, 2)->comment('Приход');
             $table->decimal('dec', 10, 2)->comment('Расход');
             $table->string('destination', 255);
@@ -72,7 +72,7 @@ class CreateUsersTable extends Migration
         /** ПОЛЬЗОВАТЕЛИ ДЕНЬГИ */
         Schema::create('user_moneys', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->integer('user')->index('user_id')->comment('Ссылка на пользователя');
             $table->decimal('inc', 10, 2)->comment('Приход');
             $table->decimal('dec', 10, 2)->comment('Расход');
             $table->string('destination', 255);

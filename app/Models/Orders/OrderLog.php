@@ -4,7 +4,7 @@ namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OrderCeiling extends Model
+class OrderLog extends Model
 {
     /** The attributes that are mass assignable. */
     protected $fillable = [

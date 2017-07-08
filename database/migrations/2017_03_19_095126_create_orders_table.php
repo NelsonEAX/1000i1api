@@ -16,16 +16,16 @@ class CreateOrdersTable extends Migration
         /** ЗАКАЗЫ */
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
-            $table->integer('customer')->index('customer')->comment('Ссылка на клиента');
+            //$table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->integer('customer_id')->index('customer_id')->comment('Ссылка на клиента');
             $table->timestamps();
         });
 
         /** ЗАКАЗЫ ТОВАРЫ */
-        Schema::create('order_products', function (Blueprint $table) {
+        Schema::create('order_product', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order')->index('order')->comment('Ссылка на заказ');
-            $table->integer('product')->index('product')->comment('Ссылка на продукт');
+            $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
+            $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
             $table->decimal('count', 10, 2)->comment('Количество');
             $table->decimal('price', 10, 2)->comment('Цена');
             $table->decimal('total', 10, 2)->comment('Сумма');
@@ -33,18 +33,18 @@ class CreateOrdersTable extends Migration
         });
 
         /** ЗАКАЗЫ ПОТОЛКИ */
-        Schema::create('order_ceilings', function (Blueprint $table) {
+        /*Schema::create('order_ceilings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order')->index('order')->comment('Ссылка на заказ');
             $table->integer('ceiling')->index('ceiling')->comment('Ссылка на потолок');
             $table->timestamps();
-        });
+        });*/
 
         /** ЗАКАЗЫ ПОТОЛОК КОМПЛЕКТУЮЩИЕ */
-        Schema::create('order_ceiling_products', function (Blueprint $table) {
+        Schema::create('ceiling_product', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('ceiling')->index('ceiling')->comment('Ссылка на потолок');
-            $table->integer('product')->index('product')->comment('Ссылка на продукт');
+            $table->integer('ceiling_id')->index('ceiling_id')->comment('Ссылка на потолок');
+            $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
             $table->decimal('count', 10, 2)->comment('Количество');
             $table->decimal('price', 10, 2)->comment('Цена');
             $table->decimal('total', 10, 2)->comment('Сумма');
@@ -52,11 +52,11 @@ class CreateOrdersTable extends Migration
         });
 
         /** ЗАКАЗЫ В ПРОЦЕССЕ */
-        Schema::create('order_proccess', function (Blueprint $table) {
+        Schema::create('order_processes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('state')->index('state')->comment('Ссылка на состояние');
-            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
-            $table->integer('order')->index('order')->comment('Ссылка на заказ');
+            $table->integer('state_id')->index('state_id')->comment('Ссылка на состояние');
+            $table->integer('user_id')->index('user_id')->comment('Ссылка на пользователя');
+            $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
             $table->timestamps();
         });
 
@@ -65,16 +65,16 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->string('name', 255);
             $table->string('comment', 2048);
-            $table->integer('sorting')->comment('Сортировка');
+            $table->integer('orderby')->comment('Сортировка');
             $table->boolean('enable')->default(1)->comment('');
             $table->timestamps();
         });
 
         /** ЗАКАЗЫ ИСТОРИЯ */
-        Schema::create('order_historys', function (Blueprint $table) {
+        Schema::create('order_logs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('order')->index('order')->comment('Ссылка на заказ');
-            $table->integer('user')->index('user')->comment('Ссылка на пользователя');
+            $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
+            $table->integer('user_id')->index('user_id')->comment('Ссылка на пользователя');
             $table->string('method', 255);
             $table->text('sql', 65536);
             $table->string('url', 255);
@@ -84,6 +84,7 @@ class CreateOrdersTable extends Migration
         /** ПОТОЛКИ */
         Schema::create('ceilings', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
             $table->decimal('perimeter', 10, 2)->comment('Цена');
             $table->decimal('area', 10, 2)->comment('Цена');
             $table->text('json', 65536);
@@ -113,12 +114,12 @@ class CreateOrdersTable extends Migration
     public function down()
     {
         Schema::dropIfExists('orders');
-        Schema::dropIfExists('order_ceilings');
-        Schema::dropIfExists('order_ceiling_products');
-        Schema::dropIfExists('order_products');
+        //Schema::dropIfExists('order_ceilings');
+        Schema::dropIfExists('ceiling_product');
+        Schema::dropIfExists('order_product');
         Schema::dropIfExists('order_states');
-        Schema::dropIfExists('order_proccess');
-        Schema::dropIfExists('order_historys');
+        Schema::dropIfExists('order_processes');
+        Schema::dropIfExists('order_logs');
         Schema::dropIfExists('ceilings');
         Schema::dropIfExists('customers');
     }
