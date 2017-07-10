@@ -16,15 +16,15 @@ class CreateStoragesTable extends Migration
         /** ХРАНИЛИЩЕ ФАЙЛОВ */
         Schema::create('storages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->index('user')->comment('Ссылка на пользователя');
-            $table->integer('order_id')->index('order')->comment('Ссылка на заказ');
-            $table->integer('product_id')->index('product')->comment('Ссылка на товар');
-            $table->integer('category_id')->index('category')->comment('Ссылка на категорию товара');
+            $table->integer('user_id')->nullable()->index('user')->comment('Ссылка на пользователя');
+            $table->integer('order_id')->nullable()->index('order')->comment('Ссылка на заказ');
+            $table->integer('product_id')->nullable()->index('product')->comment('Ссылка на товар');
+            $table->integer('category_id')->nullable()->index('category')->comment('Ссылка на категорию товара');
             $table->string('path', 255);
             $table->string('name', 255);
             $table->string('uuid', 36);
             $table->string('extension', 10);
-            $table->boolean('show')->default(true);
+            $table->boolean('enable')->default(true);
             $table->timestamps();
         });
 

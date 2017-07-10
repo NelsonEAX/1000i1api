@@ -15,14 +15,14 @@ class AdminSectionsServiceProvider extends ServiceProvider
      */
     protected $sections = [
         //Users
-        \App\Models\Users\User::class => 'App\Http\Sections\Users\Users',
+        \App\Models\Users\User::class => 'App\Http\Sections\Users\User',
         //Products
         \App\Models\Products\Category::class => 'App\Http\Sections\Products\Category',
         \App\Models\Products\Product::class => 'App\Http\Sections\Products\Product',
         //Orders
 
         //Storage
-
+        \App\Models\Storages\Storage::class => 'App\Http\Sections\Storages\Storage',
 
         //Landings
         \App\Models\land_1000i1potolok\DbLanding::class  => 'App\Http\Sections\Land1000i1Potolok\DbLandingSettings',

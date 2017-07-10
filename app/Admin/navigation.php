@@ -114,6 +114,24 @@ return [
                     );
                 })
             );
+            $page->addPage((new Page())
+                ->setPriority(40)
+                ->setTitle('Хранилище')
+                ->setIcon('fa fa-archive')
+                ->setPages(function (Page $page) {
+                    $page->addPage((new Page(\App\Models\Storages\Storage::class))
+                        ->setPriority(10)
+                        ->setTitle('Изображения')
+                        ->setIcon('fa fa-picture-o')
+                        ->setUrl('admin/storages/storage')
+                        ->setBadge( new Badge( \App\Models\Storages\Storage::count()))
+                        ->setAccessLogic(function (Page $page) {
+                            return true;
+                        })
+                    );
+                })
+
+            );
         }),
 
 

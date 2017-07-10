@@ -13,9 +13,9 @@ use AdminForm;
 use AdminFormElement;
 use SleepingOwl\Admin\Contracts\Initializable;
 
-class Users extends Section implements Initializable
+class User extends Section implements Initializable
 {
-    protected $model = '\App\Models\Users\User';
+    protected $model = \App\Models\Users\User::class;
     /**
      * @var bool
      */
@@ -157,71 +157,6 @@ class Users extends Section implements Initializable
     public function onCreate()
     {
         return $this->onEdit(null);
-        /*$display = AdminDisplay::tabbed();
-        $display->setTabs(function(){
-            $tabs = [];
-            $form = AdminForm::panel();
-            $form->addHeader(AdminFormElement::columns()
-                ->addColumn([
-                    AdminFormElement::text('lastname', 'Фамилия')
-                        ->required()
-                ], 4)
-                ->addColumn([
-                    AdminFormElement::text('name', 'Имя')
-                        ->required()
-                ], 4)
-                ->addColumn([
-                    AdminFormElement::text('middlename', 'Отчество')
-                        ->required()
-                ], 4)
-            );
-            $form->addBody([
-                AdminFormElement::columns()
-                    ->addColumn([
-                        AdminFormElement::text('login', 'Логин')
-                            ->required()
-                            ->addValidationRule('unique:users,login', 'Этот Логин уже занят, пробуй еще!')
-                            ->addValidationRule('alpha_dash', 'Логин должен состоять из букв латинского алфавита и цифр'),
-                    ], 4)
-                    ->addColumn([
-                        AdminFormElement::text('email', 'Емайл')
-                            ->required()
-                            ->addValidationRule('unique:users,email', 'Этот электронный адрес уже занят, пробуй еще!')
-                            ->addValidationRule('email', 'Электронный адрес должен иметь вид: example@mail.ru'),
-                    ], 4)
-                    ->addColumn([
-                        AdminFormElement::text('phone', 'Телефон')->required()
-                            ->addValidationRule('unique:users,phone', 'Этот номер телефона уже занят, пробуй еще!')
-                            ->addValidationRule('regex:/^\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
-                    ], 4),
-                AdminFormElement::columns()
-                    ->addColumn([
-                        AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),
-                        AdminFormElement::textarea('comment', 'Комментарий'),
-                    ], 8)
-                    ->addColumn([
-                        AdminFormElement::image('photo', 'Photo')->addValidationRule('image', 'Необходимо выбрать изображение'),
-                    ], 4),
-            ]);
-            $form->addFooter([
-                AdminFormElement::columns()
-                    ->addColumn([
-                        AdminFormElement::checkbox('is_admin', 'Админ')
-                    ], 3)
-                    ->addColumn([
-                        AdminFormElement::checkbox('is_private', 'Физ.Лицо')
-                    ], 3)
-                    ->addColumn([
-                        AdminFormElement::checkbox('is_legal', 'Юр.Лицо')
-                    ], 3)
-                    ->addColumn([
-                        AdminFormElement::checkbox('is_confirmed', 'Подтвержден')
-                    ], 3)
-            ]);
-            $tabs[] = AdminDisplay::tab($form)->setLabel('Карточка контрагента')->setActive(true)->setIcon('<i class="fa fa-id-card-o"></i>');
-            return $tabs;
-        });
-        return $display;*/
     }
 
     /**

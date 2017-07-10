@@ -22,7 +22,7 @@ use SleepingOwl\Admin\Contracts\Initializable;
  */
 class Product extends Section
 {
-    protected $model = '\App\Models\Products\Product';
+    protected $model = \App\Models\Products\Product::class;
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
      *
@@ -51,7 +51,7 @@ class Product extends Section
                 AdminColumn::text('id', '#')->setWidth('10px'),
                 AdminColumn::text('name', 'Название'),
                 // todo:сделать редактирование по месту
-                AdminColumn::text('order', 'Порядок')->setWidth('10px'),
+                AdminColumn::text('orderby', 'Порядок')->setWidth('10px'),
                 AdminColumn::text('enable', 'Активность')->setWidth('10px')
             )->paginate(20);
     }
@@ -68,96 +68,73 @@ class Product extends Section
             $tabs = [];
             $main = AdminForm::panel();
             $price = AdminForm::panel();
+            $photo = AdminForm::panel();
             $main->addHeader(AdminFormElement::columns()
                 ->addColumn([
-                        AdminFormElement::text('name', 'Название')->required()
+                        AdminFormElement::text('name', 'Название')
+                            ->required()
                             ->addValidationRule('unique:products,name,'.$id, 'Это Название уже занято, пробуй еще!')
                     ], 8)
                 ->addColumn([
-                        AdminFormElement::number('order', 'Порядок')->required()
+                        AdminFormElement::number('orderby', 'Порядок')
+                            ->required()
                             ->setDefaultValue(100)
                             ->setMin(0)
                             ->setMax(999)
                     ], 2)
                 ->addColumn([
-                        AdminFormElement::checkbox('enable', 'Активность')->required()
+                        AdminFormElement::checkbox('enable', 'Активность')
+                            ->required()
+                            ->setDefaultValue(true)
                     ], 2)
             );
             $main->addBody([
                 AdminFormElement::columns()->addColumn([
-                    AdminFormElement::select('id', 'Categories', \App\Models\Products\Category::class)->setDisplay('name'),
+                    AdminFormElement::select('category_id', 'Категория', \App\Models\Products\Category::class)
+                        ->required()
+                        ->setDisplay('name')
                 ], 4)
 
-               /* AdminFormElement::columns()->addColumn([
-                    AdminFormElement::text('login', 'Логин')->required()
-                        ->addValidationRule('unique:users,login,'.$id, 'Этот Логин уже занят, пробуй еще!')
-                        ->addValidationRule('alpha_dash', 'Логин должен состоять из букв латинского алфавита и цифр'),
-                ], 4)->addColumn([
-                    AdminFormElement::text('email', 'Емайл')->required()
-                        ->addValidationRule('unique:users,email,'.$id, 'Этот электронный адрес уже занят, пробуй еще!')
-                        ->addValidationRule('email', 'Электронный адрес должен иметь вид: example@mail.ru'),
-                ], 4)->addColumn([
-                    AdminFormElement::text('phone', 'Телефон')->required()
-                        ->addValidationRule('unique:users,phone,'.$id, 'Этот номер телефона уже занят, пробуй еще!')
-                        ->addValidationRule('regex:/^\+7\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
-                ], 4),
-                AdminFormElement::columns()->addColumn([
-                    AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),
-                    AdminFormElement::textarea('comment', 'Комментарий'),
-                ], 8)->addColumn([
-                    AdminFormElement::image('photo', 'Photo')->addValidationRule('image', 'Необходимо выбрать изображение'),
-                ], 4),*/
             ]);
             $main->addFooter([
-                /*AdminFormElement::columns()
-                    ->addColumn([
-                        AdminFormElement::checkbox('is_admin', 'Админ')
-                    ], 3)->addColumn([
-                        AdminFormElement::checkbox('is_private', 'Физ.Лицо')
-                    ], 3)->addColumn([
-                        AdminFormElement::checkbox('is_legal', 'Юр.Лицо')
-                    ], 3)->addColumn([
-                        AdminFormElement::checkbox('is_confirmed', 'Подтвержден')
-                    ], 3)*/
+
             ]);
 
-            $price->addHeader(AdminFormElement::columns()/*
-                ->addColumn([
-                    AdminFormElement::text('name', 'Название')->required()
-                        ->addValidationRule('unique:products,name,'.$id, 'Это Название уже занято, пробуй еще!')
-                ], 8)->addColumn([
-                    AdminFormElement::number('order', 'Порядок')->required()
-                        ->setDefaultValue(100)
-                        ->setMin(0)
-                        ->setMax(999)
-                ], 2)->addColumn([
-                    AdminFormElement::checkbox('enable', 'Активность')->required()
-                ], 2)*/
+            $price->addHeader(AdminFormElement::columns()
+                
             );
             $price->addBody([
-                /*AdminFormElement::columns()->addColumn([
-                    AdminFormElement::text('login', 'Логин')->required()
-                        ->addValidationRule('unique:users,login,'.$id, 'Этот Логин уже занят, пробуй еще!')
-                        ->addValidationRule('alpha_dash', 'Логин должен состоять из букв латинского алфавита и цифр'),
-                ], 4)->addColumn([
-                    AdminFormElement::text('email', 'Емайл')->required()
-                        ->addValidationRule('unique:users,email,'.$id, 'Этот электронный адрес уже занят, пробуй еще!')
-                        ->addValidationRule('email', 'Электронный адрес должен иметь вид: example@mail.ru'),
-                ], 4)->addColumn([
-                    AdminFormElement::text('phone', 'Телефон')->required()
-                        ->addValidationRule('unique:users,phone,'.$id, 'Этот номер телефона уже занят, пробуй еще!')
-                        ->addValidationRule('regex:/^\+7\d*$/', 'Номер телефона должен иметь вид: +79876543210'),
-                ], 4),
-                AdminFormElement::columns()->addColumn([
-                    AdminFormElement::date('birthday', 'Дата рождения')->setFormat('Y-m-d')->required(),
-                    AdminFormElement::textarea('comment', 'Комментарий'),
-                ], 8)->addColumn([
-                    AdminFormElement::image('photo', 'Photo')->addValidationRule('image', 'Необходимо выбрать изображение'),
-                ], 4),*/
+                
             ]);
 
-            array_push($tabs, AdminDisplay::tab($main)->setLabel('Характеристики')->setActive(true)->setIcon('<i class="fa fa-id-card-o"></i>'));
-            array_push($tabs, AdminDisplay::tab($price)->setLabel('Цены')->setActive(false)->setIcon('<i class="fa fa-rub"></i>'));
+            if (!is_null($id)) { // Если галерея создана и у нее есть ID
+                $photo = AdminDisplay::table()
+                    ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели в которой хранятся фотографии
+                    ->setApply(function($query) use($id) {
+                        $query->where('product_id', $id); // Фильтруем список фотографий по ID галереи
+                    })
+                    ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять идентификатор галереи
+                    ->setColumns(
+                        AdminColumn::link('name', 'Назавние'),
+                        AdminColumn::image('uuid', 'Изображение')
+                            ->setHtmlAttribute('class', 'text-center')
+                            ->setWidth('200px')
+                    );
+            }
+
+        /*$form->addBody($photos);*/
+    //}
+
+
+            array_push($tabs, AdminDisplay::tab($main)->setLabel('Характеристики')
+                ->setActive(true)
+                ->setIcon('<i class="fa fa-id-card-o"></i>'));
+            array_push($tabs, AdminDisplay::tab($price)->setLabel('Цены')
+                ->setActive(false)
+                ->setIcon('<i class="fa fa-rub"></i>'));
+            array_push($tabs, AdminDisplay::tab($photo)->setLabel('Изображения')
+                ->setActive(false)
+                ->setIcon('<i class="fa fa-picture-o"></i>'));
             return $tabs;
         });
         return $display;
