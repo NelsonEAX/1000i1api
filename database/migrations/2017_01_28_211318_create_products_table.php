@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->integer('category_id')->index('category_id')->comment('Ссылка на категорию');
             $table->integer('manufacturer_id')->nullable()->index('manufacturer_id')->comment('Ссылка на производителя');
             $table->string('name', 255)->index('name');
-            $table->string('description', 2048);
+            $table->string('description', 2048)->nullable();
             $table->string('model', 45)->nullable()->index('model');
             $table->string('color', 45)->nullable()->comment('Цвет');
             $table->decimal('weight', 10, 6)->nullable()->comment('Вес');
@@ -60,7 +60,7 @@ class CreateProductsTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 255);
-            $table->string('description', 2048);
+            $table->string('description', 2048)->nullable();
             $table->integer('orderby')->default(100)->comment('Порядок');
             $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();

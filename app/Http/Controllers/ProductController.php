@@ -114,13 +114,12 @@ class ProductController extends Controller
                 \']\' 
             ) as `imgs`
             FROM `categories` c
-            LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
-            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
+            LEFT JOIN `storages` s ON s.`category_id` = c.`id`
             WHERE c.`enable` = true
             GROUP BY c.`id`,
             c.`name`,
             c.`description`
-            ORDER BY c.`order`
+            ORDER BY c.`orderby`
         ');
 
         foreach($categories as $category)
@@ -139,16 +138,12 @@ class ProductController extends Controller
     public function categories()
     {
         $categories = \DB::select('
-            SELECT
-            c.`id`,
-            c.`name`
-            FROM `categories` c
-            LEFT JOIN `storage_categories` sc ON sc.`category` = c.`id`
-            LEFT JOIN `storages` s ON s.`id` = sc.`storage`
-            WHERE c.`enable` = true
-            GROUP BY c.`id`,
-            c.`name`
-            ORDER BY c.`order`
+            SELECT c.`id` , c.`name` 
+            FROM  `categories` c
+            LEFT JOIN  `storages` s ON s.`category_id` = c.`id`
+            WHERE c.`enable` = TRUE 
+            GROUP BY c.`id` , c.`name` 
+            ORDER BY c.`orderby`
         ');
 
         return response()->json($categories);
@@ -182,7 +177,7 @@ class ProductController extends Controller
             p.`name`,
             p.`description`,
             p.`model`,
-            pc.`category`,
+            p.`category_id`,
             pp.`purchase`,
             pp.`wholesale`,
             pp.`dealer`,
@@ -201,16 +196,14 @@ class ProductController extends Controller
                 \']\' 
             ) as `imgs`
             FROM  `products` p
-            LEFT JOIN `product_categories` pc ON pc.`product` = p.`id` 
-            LEFT JOIN `storage_products` sp ON sp.`product` = p.`id` 
-            LEFT JOIN `storages` s ON s.`id` = sp.`storage` 
-            LEFT JOIN `product_prices` pp ON pp.`product` = p.`id` and pp.`id` = (SELECT max(id) FROM `product_prices` WHERE `product` = p.`id`)
+            LEFT JOIN `storages` s ON s.`product_id` = p.`id` 
+            LEFT JOIN `product_prices` pp ON pp.`product_id` = p.`id` and pp.`id` = (SELECT max(id) FROM `product_prices` WHERE `product_id` = p.`id`)
             WHERE p.`enable` = true
             GROUP BY p.`id`,
             p.`name`,
             p.`description`,
             p.`model`,
-            pc.`category`,
+            p.`category_id`,
             pp.`purchase`,
             pp.`wholesale`,
             pp.`dealer`,
@@ -219,7 +212,7 @@ class ProductController extends Controller
             pp.`percen_wholesale`,
             pp.`percen_dealer`,
             pp.`percen_retail`
-            ORDER BY p.`order`
+            ORDER BY p.`orderby`
         ');
 
         foreach($products as $product)

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Sections\Products;
+namespace App\Http\Sections\Storages;
 
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -13,14 +13,15 @@ use AdminFormElement;
 use SleepingOwl\Admin\Contracts\Initializable;
 
 /**
- * Class Category
+ * Class Product
  *
- * @property \App\Models\Products\Category $model
+ * @property \App\Models\Storages\Storage $model
  *
  * @see http://sleepingowladmin.ru/docs/model_configuration_section
  */
-class Category extends Section
+class Storage extends Section
 {
+    protected $model = \App\Models\Storages\Storage::class;
     /**
      * @see http://sleepingowladmin.ru/docs/model_configuration#ограничение-прав-доступа
      *
@@ -31,12 +32,12 @@ class Category extends Section
     /**
      * @var string
      */
-    protected $title = 'Категории';
+    protected $title = 'Изображения';
 
     /**
      * @var string
      */
-    protected $alias = 'products/category';
+    protected $alias = 'storages/storage';
 
     /**
      * @return DisplayInterface
@@ -46,10 +47,14 @@ class Category extends Section
         return AdminDisplay::datatables()/*->with('users')*/
         ->setHtmlAttribute('class', 'table-primary')
             ->setColumns(
-                AdminColumn::text('id', '#')->setWidth('10px'),
-                AdminColumn::text('name', 'Название'),
+                AdminColumn::link('name', 'Назавние'),
+                AdminColumn::custom('Published', function (\App\Models\Storages\Storage $storage) {
+                    return $storage->published ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>';
+                })->setWidth('50px')->setHtmlAttribute('class', 'text-center'),
+                AdminColumn::image('uuid', 'Изображение')
+                    ->setHtmlAttribute('class', 'text-center')
+                    ->setWidth('200px'),
                 // todo:сделать редактирование по месту
-                AdminColumn::text('orderby', 'Порядок')->setWidth('10px'),
                 AdminColumn::text('enable', 'Активность')->setWidth('10px')
             )->paginate(20);
     }
@@ -61,20 +66,7 @@ class Category extends Section
      */
     public function onEdit($id)
     {
-        return AdminForm::panel()->addBody([
-            AdminFormElement::text('name', 'Название')
-                ->required()
-                ->addValidationRule('unique:categories,name,'.$id, 'Это Название уже занято, пробуй еще!'),
-            AdminFormElement::textarea('description', 'Описание'),
-            AdminFormElement::number('orderby', 'Порядок')
-                ->required()
-                ->setDefaultValue(100)
-                ->setMin(0)
-                ->setMax(999),
-            AdminFormElement::checkbox('enable', 'Активность')
-                ->required()
-                ->setDefaultValue(true),
-        ]);
+       
     }
 
     /**
