@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Storages\Storage;
-use App\Models\Storages\StorageCategory;
-use App\Models\Storages\StorageOrder;
-use App\Models\Storages\StorageProduct;
-use App\Models\Storages\StorageUser;
 use Illuminate\Http\Request;
 
 class StorageController extends Controller

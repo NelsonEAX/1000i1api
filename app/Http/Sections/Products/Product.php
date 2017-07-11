@@ -107,24 +107,20 @@ class Product extends Section
                 
             ]);
 
-            if (!is_null($id)) { // Если галерея создана и у нее есть ID
+            if (!is_null($id)) { // Если продукция создана и у нее есть ID 
                 $photo = AdminDisplay::table()
-                    ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели в которой хранятся фотографии
+                    ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели
                     ->setApply(function($query) use($id) {
-                        $query->where('product_id', $id); // Фильтруем список фотографий по ID галереи
+                        $query->where('product_id', $id); // Фильтруем список фотографий по ID продукции
                     })
-                    ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять идентификатор галереи
+                    ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять ид продукции
                     ->setColumns(
                         AdminColumn::link('name', 'Назавние'),
-                        AdminColumn::image('uuid', 'Изображение')
+                        AdminColumn::image('url', 'Изображение')
                             ->setHtmlAttribute('class', 'text-center')
                             ->setWidth('200px')
                     );
             }
-
-        /*$form->addBody($photos);*/
-    //}
-
 
             array_push($tabs, AdminDisplay::tab($main)->setLabel('Характеристики')
                 ->setActive(true)
