@@ -2,6 +2,8 @@
 
 namespace App\Http\Sections\Storages;
 
+use Event;
+use App\Events\DeleteFromStorageEvent;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
@@ -80,10 +82,11 @@ class Storage extends Section
     /**
      * @return void
      */
-    /*public function onDelete($id)
+    public function onDelete($id)
     {
         // todo: remove if unused
-    }*/
+        Event::fire(new DeleteFromStorageEvent(\App\Models\Storages\Storage::find($id)));
+    }
 
     /**
      * @return void
