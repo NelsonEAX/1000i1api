@@ -54,6 +54,7 @@ class CreateProductsTable extends Migration
             $table->integer('percen_dealer')->default(0)->comment('Процент от закупочной для дилерской');
             $table->integer('percen_retail')->default(0)->comment('Процент от закупочной для розничной');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** КАТЕГОРИЯ */
