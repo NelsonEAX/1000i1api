@@ -50,10 +50,7 @@ class Storage extends Section
         ->setHtmlAttribute('class', 'table-primary')
             ->setColumns(
                 AdminColumn::link('name', 'Назавние'),
-                AdminColumn::custom('Published', function (\App\Models\Storages\Storage $storage) {
-                    return $storage->published ? '<i class="fa fa-check"></i>' : '<i class="fa fa-minus"></i>';
-                })->setWidth('50px')->setHtmlAttribute('class', 'text-center'),
-                AdminColumn::image('uuid', 'Изображение')
+                AdminColumn::image('url', 'Изображение')
                     ->setHtmlAttribute('class', 'text-center')
                     ->setWidth('200px'),
                 // todo:сделать редактирование по месту
