@@ -15,11 +15,8 @@ class DeleteFromStorageEvent
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $dir;
-    public $uuid;
-    public $extension;
-    
-    
+    public $storage;
+
     /**
      * Create a new event instance.
      *
@@ -27,13 +24,7 @@ class DeleteFromStorageEvent
      */
     public function __construct(Storage $storage)
     {
-        $this->dir = '';
-        if ($storage->user_id) $this->dir = 'users/';
-        if ($storage->order_id) $this->dir = 'orders/';
-        if ($storage->product_id) $this->dir = 'products/';
-        if ($storage->category_id) $this->dir = 'categories/';
-        $this->uuid = $storage->uuid;
-        $this->extension = $storage->extension;
+        $this->storage = $storage;
     }
 
     /**
