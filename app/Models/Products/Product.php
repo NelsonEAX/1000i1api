@@ -17,14 +17,9 @@ class Product extends Model
         'updated_at',
     ];
 
-    /*public function storage()
+    /** СВЯЗИ */
+    public function storage()
     {
-        return $this->hasMany('App\Models\Storages\StorageProduct', 'product', 'id' );
-    }*/
-
-    /*public function storage()
-    {
-        return $this->hasManyThrough('App\Models\Storages\Storage', 'App\Models\Storages\StorageProduct',
-            'product', 'id', 'id' );
-    }*/
+        return $this->hasMany('App\Models\Storages\Storage');
+    }
 }

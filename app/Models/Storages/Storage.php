@@ -18,12 +18,26 @@ class Storage extends Model
         'updated_at',
     ];
 
-   /* public function product()
-    /*{
-        return $this->belongsTo('App\Models\Storage\StorageProduct', 'storage', 'id' );
-    }*/
+    /** СВЯЗИ */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Products\Product');
+    }
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Products\Category');
+    }
+    public function order()
+    {
+        return $this->belongsTo('App\Models\Orders\Order');
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\Models\Users\User');
+    }
 
     /** КАЛЬКУЛИРУЕМЫЕ ПОЛЯ*/
+
     /**
      * @return 'url' - url изображения для отображения (в админке)
      */
