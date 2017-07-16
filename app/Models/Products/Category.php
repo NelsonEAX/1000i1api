@@ -16,4 +16,10 @@ class Category extends Model
         'created_at',
         'updated_at',
     ];
+
+    /** СВЯЗИ */
+    public function storage()
+    {
+        return $this->hasMany('App\Models\Storages\Storage');
+    }
 }

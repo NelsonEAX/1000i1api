@@ -79,4 +79,10 @@ class User extends Authenticatable
     {
         return $this->is_admin;
     }
+
+    /** СВЯЗИ */
+    public function storage()
+    {
+        return $this->hasMany('App\Models\Storages\Storage');
+    }
 }
