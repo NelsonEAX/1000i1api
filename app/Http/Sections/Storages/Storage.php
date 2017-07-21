@@ -2,7 +2,8 @@
 
 namespace App\Http\Sections\Storages;
 
-use Event;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage as LaravelStorage;
 use App\Events\DeleteFromStorageEvent;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
@@ -65,7 +66,35 @@ class Storage extends Section
      */
     public function onEdit($id)
     {
-       
+        if( Input::has('user_id') || Input::has('order_id') || Input::has('product_id') || Input::has('category_id') ){
+            echo 'Нихуя все норм';
+            return AdminForm::panel()->addBody([
+                AdminFormElement::images('images', 'Images')
+                    ->setUploadPath(function(\Illuminate\Http\UploadedFile $file) {
+                        dd($file);
+                        if(Input::has('user_id')){
+                            return LaravelStorage::disk('storage')->url('users');
+                        }else if(Input::has('order_id')){
+                            return LaravelStorage::disk('storage')->url('orders');
+                        }else if(Input::has('product_id')){
+                            return LaravelStorage::disk('storage')->url('products');
+                        }else if(Input::has('category_id')){
+                            return LaravelStorage::disk('storage')->url('categories');
+                        }
+                    })
+                ,
+            ]);
+
+
+
+
+
+
+        } else {
+            return 'Нихуя нет';
+        }
+
+        return $form;
     }
 
     /**
@@ -74,6 +103,7 @@ class Storage extends Section
     public function onCreate()
     {
         return $this->onEdit(null);
+
     }
 
     /**
@@ -82,7 +112,6 @@ class Storage extends Section
     public function onDelete($id)
     {
         // todo: remove if unused
-        Event::fire(new DeleteFromStorageEvent(\App\Models\Storages\Storage::find($id)));
     }
 
     /**
