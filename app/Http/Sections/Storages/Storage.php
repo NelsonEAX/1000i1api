@@ -2,6 +2,7 @@
 
 namespace App\Http\Sections\Storages;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage as LaravelStorage;
 use App\Events\DeleteFromStorageEvent;
@@ -41,7 +42,11 @@ class Storage extends Section
      * @var string
      */
     protected $alias = 'storages/storage';
-
+    protected $request;
+    public function __construct(Illuminate\Foundation\Application $act, Request $request)
+    {
+        $this->request = $request;
+    }
     /**
      * @return DisplayInterface
      */
@@ -66,35 +71,68 @@ class Storage extends Section
      */
     public function onEdit($id)
     {
-        if( Input::has('user_id') || Input::has('order_id') || Input::has('product_id') || Input::has('category_id') ){
+        /*return AdminForm::panel()->addBody([
+            AdminFormElement::images('string $key', 'string $label = null')
+                ->setUploadPath(function(\Illuminate\Http\UploadedFile $file) {
+                    //dd($file);
+                    return 'storage/test'; // public/files
+                })
+                ->setUploadSettings([
+                    'orientate' => [],
+                    'resize' => [1280, null, function ($constraint) {
+                        $constraint->upsize();
+                        $constraint->aspectRatio();
+                    }],
+                    'fit' => [200, 300, function ($constraint) {
+                        $constraint->upsize();
+                        $constraint->aspectRatio();
+                    }]
+                ])
+    	]);*/
+        
+       /* if( Input::has('user_id') || Input::has('order_id') || Input::has('product_id') || Input::has('category_id') ){
             echo 'Нихуя все норм';
-            return AdminForm::panel()->addBody([
-                AdminFormElement::images('images', 'Images')
-                    ->setUploadPath(function(\Illuminate\Http\UploadedFile $file) {
-                        dd($file);
-                        if(Input::has('user_id')){
-                            return LaravelStorage::disk('storage')->url('users');
-                        }else if(Input::has('order_id')){
-                            return LaravelStorage::disk('storage')->url('orders');
-                        }else if(Input::has('product_id')){
-                            return LaravelStorage::disk('storage')->url('products');
-                        }else if(Input::has('category_id')){
-                            return LaravelStorage::disk('storage')->url('categories');
-                        }
-                    })
-                ,
-            ]);
-
-
-
-
-
-
         } else {
-            return 'Нихуя нет';
+            echo 'Нихуя нет';
+        }*/
+        
+        dd($this->request->url());
+        if(Input::has('user_id')){
+            $storage_path = LaravelStorage::disk('storage')->url('users');
+            $this->storage_path = 'storage/users';
+        }else if(Input::has('order_id')){
+            $storage_path = LaravelStorage::disk('storage')->url('orders');
+            $this->storage_path = 'storage/orders';
+        }else if(Input::has('product_id')){
+            $storage_path = LaravelStorage::disk('storage')->url('products');
+            $this::$storage_path = 'storage/products';
+        }else if(Input::has('category_id')){
+            $storage_path = LaravelStorage::disk('storage')->url('categories');
+            $this->storage_path = 'storage/categories';
         }
 
-        return $form;
+        /*}else{
+            $storage_path = 'storage/test';
+        }*/
+
+        //dd($storage_path);
+        //echo $storage_path;
+        
+        return AdminForm::panel()->addBody([
+            AdminFormElement::images('images', 'Images')
+                ->setUploadPath(function(\Illuminate\Http\UploadedFile $file){
+                    if(Input::has('user_id')){
+                        $storage_path = LaravelStorage::disk('storage')->url('users');
+                    }else if(Input::has('order_id')){
+                        $storage_path = LaravelStorage::disk('storage')->url('orders');
+                    }else if(Input::has('product_id')){
+                        $storage_path = LaravelStorage::disk('storage')->url('products');
+                    }else if(Input::has('category_id')){
+                        $storage_path = LaravelStorage::disk('storage')->url('categories');
+                    }
+                    return $storage_path;
+                })
+        ]);//->setAction('///googlr.ru');
     }
 
     /**
