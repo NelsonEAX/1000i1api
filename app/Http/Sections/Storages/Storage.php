@@ -2,7 +2,7 @@
 
 namespace App\Http\Sections\Storages;
 
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage as LaravelStorage;
 use App\Events\DeleteFromStorageEvent;
@@ -42,11 +42,7 @@ class Storage extends Section
      * @var string
      */
     protected $alias = 'storages/storage';
-    protected $request;
-    public function __construct(Illuminate\Foundation\Application $act, Request $request)
-    {
-        $this->request = $request;
-    }
+
     /**
      * @return DisplayInterface
      */
@@ -89,50 +85,62 @@ class Storage extends Section
                     }]
                 ])
     	]);*/
-        
-       /* if( Input::has('user_id') || Input::has('order_id') || Input::has('product_id') || Input::has('category_id') ){
-            echo 'Нихуя все норм';
-        } else {
-            echo 'Нихуя нет';
-        }*/
-        
-        dd($this->request->url());
+
+
+        $elements = [];
+
         if(Input::has('user_id')){
-            $storage_path = LaravelStorage::disk('storage')->url('users');
-            $this->storage_path = 'storage/users';
+            $storage_path = substr( LaravelStorage::disk('storage')->url('users'), 1);
+            array_push( $elements,
+                AdminFormElement::hidden('user_id')->setHtmlAttribute('value',Input::get('user_id')) );
         }else if(Input::has('order_id')){
-            $storage_path = LaravelStorage::disk('storage')->url('orders');
-            $this->storage_path = 'storage/orders';
+            $storage_path = substr( LaravelStorage::disk('storage')->url('orders'), 1);
+            array_push( $elements,
+                AdminFormElement::hidden('order_id')->setHtmlAttribute('value',Input::get('order_id')) );
         }else if(Input::has('product_id')){
-            $storage_path = LaravelStorage::disk('storage')->url('products');
-            $this::$storage_path = 'storage/products';
+            $storage_path = substr( LaravelStorage::disk('storage')->url('products'), 1);
+            array_push( $elements,
+                AdminFormElement::hidden('product_id')->setHtmlAttribute('value',Input::get('product_id')) );
         }else if(Input::has('category_id')){
-            $storage_path = LaravelStorage::disk('storage')->url('categories');
-            $this->storage_path = 'storage/categories';
+            $storage_path = substr( LaravelStorage::disk('storage')->url('categories'), 1);
+            array_push( $elements,
+                AdminFormElement::hidden('category_id')->setHtmlAttribute('value',Input::get('category_id')) );
+        }else{
+            $storage_path = 'storage/uploads';
         }
 
-        /*}else{
-            $storage_path = 'storage/test';
-        }*/
 
-        //dd($storage_path);
-        //echo $storage_path;
-        
-        return AdminForm::panel()->addBody([
-            AdminFormElement::images('images', 'Images')
-                ->setUploadPath(function(\Illuminate\Http\UploadedFile $file){
-                    if(Input::has('user_id')){
-                        $storage_path = LaravelStorage::disk('storage')->url('users');
-                    }else if(Input::has('order_id')){
-                        $storage_path = LaravelStorage::disk('storage')->url('orders');
-                    }else if(Input::has('product_id')){
-                        $storage_path = LaravelStorage::disk('storage')->url('products');
-                    }else if(Input::has('category_id')){
-                        $storage_path = LaravelStorage::disk('storage')->url('categories');
-                    }
-                    return $storage_path;
-                })
-        ]);//->setAction('///googlr.ru');
+        $panel = AdminForm::panel();
+        array_push( $elements,
+            AdminFormElement::hidden('sleeping_owl')->setHtmlAttribute('value',true) );
+        array_push( $elements, AdminFormElement::images('images', 'Images')
+            ->setUploadPath(function(\Illuminate\Http\UploadedFile $file) use ($storage_path){
+                return $storage_path;
+            })
+            ->setUploadFileName(function(\Illuminate\Http\UploadedFile $file) {
+                $faker = \Faker\Factory::create();
+                return $faker->uuid.'.'.$file->getClientOriginalExtension();
+            })
+            ->setUploadSettings([
+                'orientate' => [],
+                'resize' => [1920, 1080, function ($constraint) {
+                    $constraint->upsize();
+                    $constraint->aspectRatio();
+                }],
+                /* TODO: Конвертировать в png
+                 * 'encode' => ['png']
+                 */
+                /* TODO: Обрезать загружаемые изображения для продукции
+                 * 'fit' => [200, 300, function ($constraint) {
+                 * $constraint->upsize();
+                 * $constraint->aspectRatio();
+                 * }]
+                 */
+            ])
+        );
+
+        $panel->addBody($elements);
+        return $panel;
     }
 
     /**
