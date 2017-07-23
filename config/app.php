@@ -185,6 +185,7 @@ return [
          */
         GrahamCampbell\Exceptions\ExceptionsServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
 
         /*
