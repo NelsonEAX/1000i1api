@@ -63,6 +63,11 @@ class Product extends Section
      */
     public function onEdit($id)
     {
+        $product = \App\Models\Products\Product::find($id);
+       // $product->find($id);
+
+        dd($product);
+
         $display = AdminDisplay::tabbed();
         $display->setTabs(function() use ($id) {
             $tabs = [];
@@ -104,7 +109,9 @@ class Product extends Section
                 
             );
             $price->addBody([
-                
+                AdminFormElement::columns()->addColumn([
+                    AdminFormElement::text('price.purchase', 'Закуп')
+                ], 4)
             ]);
 
             if (!is_null($id)) { // Если продукция создана и у нее есть ID 

@@ -22,4 +22,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Models\Storages\Storage');
     }
+
+    public function price()
+    {
+        return $this->hasMany('App\Models\Products\ProductPrice');
+    }
 }
