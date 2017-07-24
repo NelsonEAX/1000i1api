@@ -3,6 +3,7 @@
 namespace App\Models\Products;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductPrice extends Model
 {
@@ -19,4 +20,10 @@ class ProductPrice extends Model
         'created_at',
         'updated_at',
     ];
+
+    /** СВЯЗИ */
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Products\Product');
+    }
 }
