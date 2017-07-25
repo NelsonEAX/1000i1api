@@ -63,10 +63,10 @@ class Product extends Section
      */
     public function onEdit($id)
     {
-        $product = \App\Models\Products\Product::find($id);
+        //$product = \App\Models\Products\Product::find($id);
        // $product->find($id);
 
-        dd($product);
+        //dd($product);
 
         $display = AdminDisplay::tabbed();
         $display->setTabs(function() use ($id) {
@@ -105,16 +105,35 @@ class Product extends Section
 
             ]);
 
-            $price->addHeader(AdminFormElement::columns()
+            /*$price->addHeader(AdminFormElement::columns()
                 
             );
             $price->addBody([
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::text('price.purchase', 'Закуп')
                 ], 4)
-            ]);
+            ]);*/
 
             if (!is_null($id)) { // Если продукция создана и у нее есть ID 
+
+                $price = AdminDisplay::table()
+                    ->setModelClass(\App\Models\Products\ProductPrice::class)
+                    ->setApply(function($query) use($id) {
+                        $query->where('product_id', $id)
+                            ->where('deleted_at', null); // Фильтруем список цен по ID продукции
+                    })
+                    ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять ид продукции
+                    ->setColumns(
+                        AdminColumn::text('purchase', 'Закупочная'),
+                        AdminColumn::text('percen_wholesale', '<i class="fa fa-percent" aria-hidden="true"></i>'),
+                        AdminColumn::text('wholesale', 'Оптовая'),
+                        AdminColumn::text('percen_dealer', '<i class="fa fa-percent" aria-hidden="true"></i>'),
+                        AdminColumn::text('dealer', 'Дилерская'),
+                        AdminColumn::text('percen_retail', '<i class="fa fa-percent" aria-hidden="true"></i>'),
+                        AdminColumn::text('retail', 'Розничная'),
+                        AdminColumn::text('negotiable', 'Договорная')
+                    );
+
                 $photo = AdminDisplay::table()
                     ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели
                     ->setApply(function($query) use($id) {
