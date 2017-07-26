@@ -7,6 +7,7 @@ use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
 
 use AdminColumn;
+use AdminColumnEditable;
 use AdminDisplay;
 use AdminForm;
 use AdminFormElement;
@@ -52,7 +53,8 @@ class Product extends Section
                 AdminColumn::text('name', 'Название'),
                 // todo:сделать редактирование по месту
                 AdminColumn::text('orderby', 'Порядок')->setWidth('10px'),
-                AdminColumn::text('enable', 'Активность')->setWidth('10px')
+                AdminColumn::text('enable', 'Активность')->setWidth('10px'),
+                AdminColumn::relatedLink('price.purchase', 'Закуп')
             )->paginate(20);
     }
 
@@ -124,14 +126,16 @@ class Product extends Section
                     })
                     ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять ид продукции
                     ->setColumns(
+                        AdminColumnEditable::text('wholesale', 'wholesale'),
+                        AdminColumnEditable::text('dealer', 'dealer'),
                         AdminColumn::text('purchase', 'Закупочная'),
-                        AdminColumn::text('percen_wholesale', '<i class="fa fa-percent" aria-hidden="true"></i>'),
+                        AdminColumn::text('percen_wholesale', '<i class="fa fa-percent" aria-hidden="true"></i>')/*,
                         AdminColumn::text('wholesale', 'Оптовая'),
                         AdminColumn::text('percen_dealer', '<i class="fa fa-percent" aria-hidden="true"></i>'),
                         AdminColumn::text('dealer', 'Дилерская'),
                         AdminColumn::text('percen_retail', '<i class="fa fa-percent" aria-hidden="true"></i>'),
                         AdminColumn::text('retail', 'Розничная'),
-                        AdminColumn::text('negotiable', 'Договорная')
+                        AdminColumn::text('negotiable', 'Договорная')*/
                     );
 
                 $photo = AdminDisplay::table()
