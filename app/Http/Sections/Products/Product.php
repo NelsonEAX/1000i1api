@@ -109,16 +109,37 @@ class Product extends Section
 
             /*$price->addHeader(AdminFormElement::columns()
                 
-            );
-            $price->addBody([
-                AdminFormElement::columns()->addColumn([
-                    AdminFormElement::text('price.purchase', 'Закуп')
-                ], 4)
-            ]);*/
+            );*/
+            if (!is_null($id)) {
+
+                //$ProductPrice = \App\Models\Products\ProductPrice;
+                $pprice = \App\Models\Products\ProductPrice::where('product_id', $id)
+                    ->where('deleted_at', null)
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+
+                $price->addBody([
+                    AdminFormElement::columns()->addColumn([
+
+                        AdminFormElement::hidden('product_id')->setHtmlAttribute('value', $id),
+                        AdminFormElement::text('purchase', 'Закуп')->setHtmlAttribute('value', $pprice->purchase),
+                        AdminFormElement::text('wholesale', 'Оптовая')->setHtmlAttribute('value', $pprice->wholesale),
+                        AdminFormElement::text('dealer', 'Дилерская')->setHtmlAttribute('value', $pprice->dealer),
+                        AdminFormElement::text('retail', 'Розничная')->setHtmlAttribute('value', $pprice->retail),
+                        AdminFormElement::text('negotiable', 'Договорная')->setHtmlAttribute('value', $pprice->negotiable)
+
+
+                    ], 4)
+                ]);
+            }
+
+
+            $price->setAction('http://1000i1api:88/admin/products/price/create');
 
             if (!is_null($id)) { // Если продукция создана и у нее есть ID 
 
-                $price = AdminDisplay::table()
+               /* $price = AdminDisplay::table()
                     ->setModelClass(\App\Models\Products\ProductPrice::class)
                     ->setApply(function($query) use($id) {
                         $query->where('product_id', $id)
@@ -135,9 +156,9 @@ class Product extends Section
                         AdminColumn::text('dealer', 'Дилерская'),
                         AdminColumn::text('percen_retail', '<i class="fa fa-percent" aria-hidden="true"></i>'),
                         AdminColumn::text('retail', 'Розничная'),
-                        AdminColumn::text('negotiable', 'Договорная')*/
+                        AdminColumn::text('negotiable', 'Договорная')* /
                     );
-
+*/
                 $photo = AdminDisplay::table()
                     ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели
                     ->setApply(function($query) use($id) {

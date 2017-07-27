@@ -7,6 +7,7 @@ use File;
 use Log;
 use App\Events\DeleteFromStorageEvent;
 use App\Models\Products\Product;
+use App\Models\Products\ProductPrice;
 use App\Models\Products\Category;
 use App\Models\Orders\Order;
 use App\Models\Users\User;
@@ -85,6 +86,14 @@ class AppServiceProvider extends ServiceProvider
                     'storage' => $storage
                 ]);
                 return false;
+            }
+        });
+
+        //Перед добавлением новой цены, старые для этого id продукта удаляем
+        ProductPrice::creating(function ($price) {
+            if($price->product_id){
+                $all = ProductPrice::where('product_id', $price->product_id);
+                $all->delete();
             }
         });
 
