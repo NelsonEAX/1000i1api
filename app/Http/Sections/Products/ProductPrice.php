@@ -2,9 +2,17 @@
 
 namespace App\Http\Sections\Products;
 
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 use SleepingOwl\Admin\Contracts\Display\DisplayInterface;
 use SleepingOwl\Admin\Contracts\Form\FormInterface;
 use SleepingOwl\Admin\Section;
+
+use AdminColumn;
+use AdminColumnEditable;
+use AdminDisplay;
+use AdminForm;
+use AdminFormElement;
 
 /**
  * Class ProductPrice
@@ -25,12 +33,12 @@ class ProductPrice extends Section
     /**
      * @var string
      */
-    protected $title;
+    protected $title = 'Цены';
 
     /**
      * @var string
      */
-    protected $alias;
+    protected $alias = 'products/price';
 
     /**
      * @return DisplayInterface
@@ -47,7 +55,26 @@ class ProductPrice extends Section
      */
     public function onEdit($id)
     {
-        // todo: remove if unused
+        if(Input::has('product_id')) {
+            $price = AdminForm::panel();
+
+            $price->addBody([
+                AdminFormElement::columns()->addColumn([
+                    AdminFormElement::text('product_id', 'Закуп'),
+                    AdminFormElement::text('purchase', 'Закуп'),
+                    AdminFormElement::text('wholesale', 'Оптовая'),
+                    AdminFormElement::text('dealer', 'Дилерская'),
+                    AdminFormElement::text('retail', 'Розничная'),
+                    AdminFormElement::text('negotiable', 'Договорная')
+                ], 4)
+            ]);
+
+
+            return $price;
+        }else{
+            return Redirect::back();
+        }
+
     }
 
     /**
