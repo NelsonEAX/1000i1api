@@ -70,7 +70,6 @@ class AppServiceProvider extends ServiceProvider
                         $strg->order_id = $order_id;
                         $strg->product_id = $product_id;
                         $strg->category_id = $category_id;
-                        $strg->path = 'path';
                         $strg->name = $uuid ? $uuid : 'name';
                         $strg->uuid = $uuid ? $uuid : 'name';
                         $strg->extension = $ext ? $ext : 'jpg';

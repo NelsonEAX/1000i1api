@@ -48,10 +48,10 @@ $factory->define(Product::class, function (Faker\Generator $faker) {
         'name' => 'Product '.$faker->word,
         'description' => 'Product '.$faker->paragraph(random_int(1,10)),
         'model' => 'Product '.$faker->word,
-        'weight' => $faker->randomFloat(2, 1, 100),
-        'length' => $faker->randomFloat(2, 1, 100),
-        'width' => $faker->randomFloat(2, 1, 100),
-        'height' => $faker->randomFloat(2, 1, 100),
+        'weight' => $faker->numberBetween(1, 1000),
+        'length' => $faker->numberBetween(1, 1000),
+        'width' => $faker->numberBetween(1, 1000),
+        'height' => $faker->numberBetween(1, 1000),
     ];
 });
 
@@ -65,7 +65,7 @@ $factory->define(ProductStock::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(ProductPrice::class, function (Faker\Generator $faker) {
-    $price = $faker->randomFloat(2, 1, 100);
+    $price = $faker->numberBetween(1, 1000);
     return [
         'product_id' => $faker->randomElement(Product::pluck('id')->toArray()),
         'purchase' => $price,

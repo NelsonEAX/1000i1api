@@ -57,26 +57,29 @@ class CreateUsersTable extends Migration
             $table->string('email_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ПОЛЬЗОВАТЕЛИ БОНУСЫ */
         Schema::create('user_points', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->index('user_id')->comment('Ссылка на пользователя');
-            $table->decimal('inc', 10, 2)->comment('Приход');
-            $table->decimal('dec', 10, 2)->comment('Расход');
+            $table->integer('inc')->comment('Приход');
+            $table->integer('dec')->comment('Расход');
             $table->string('destination', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ПОЛЬЗОВАТЕЛИ ДЕНЬГИ */
         Schema::create('user_moneys', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user')->index('user_id')->comment('Ссылка на пользователя');
-            $table->decimal('inc', 10, 2)->comment('Приход');
-            $table->decimal('dec', 10, 2)->comment('Расход');
+            $table->integer('inc')->comment('Приход');
+            $table->integer('dec')->comment('Расход');
             $table->string('destination', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

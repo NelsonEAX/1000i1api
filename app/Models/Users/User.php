@@ -3,13 +3,15 @@
 namespace App\Models\Users;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
-
+    use SoftDeletes, HasApiTokens, Notifiable;
+    protected $dates = ['deleted_at'];
+    
     protected $casts = [
         'is_eax' => 'boolean',
         'is_admin' => 'boolean',

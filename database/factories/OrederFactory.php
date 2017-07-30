@@ -42,33 +42,33 @@ $factory->define(Order::class, function (Faker\Generator $faker) {
 $factory->define(Ceiling::class, function (Faker\Generator $faker) {
     return [
         'order_id' => $faker->randomElement(Order::pluck('id')->toArray()),
-        'perimeter' => $faker->randomFloat(2, 1, 100),
-        'area' => $faker->randomFloat(2, 1, 100),
+        'perimeter' => $faker->numberBetween(1, 1000),
+        'area' => $faker->numberBetween(1, 1000),
         'json' => '{ "corner": 5, "user": 1, "params": [0,1,2,3] }',
     ];
 });
 
 $factory->define(OrderProduct::class, function (Faker\Generator $faker) {
-    $price = $faker->randomFloat(2, 1, 100);
-    $count = $faker->randomFloat(0, 1, 100);
+    $price = $faker->numberBetween(1, 1000);
+    $quantity = $faker->numberBetween(1, 100);
     return [
         'order_id' => $faker->randomElement(Order::pluck('id')->toArray()),
         'product_id' => $faker->randomElement(Product::pluck('id')->toArray()),
-        'count' => $count,
+        'quantity' => $quantity,
         'price' => $price,
-        'total' => $price*$count,
+        'total' => $price*$quantity,
     ];
 });
 
 $factory->define(CeilingProduct::class, function (Faker\Generator $faker) {
-    $price = $faker->randomFloat(2, 1, 100);
-    $count = $faker->randomFloat(0, 1, 100);
+    $price = $faker->numberBetween(1, 1000);
+    $quantity = $faker->numberBetween(1, 100);
     return [
         'ceiling_id' => $faker->randomElement(Ceiling::pluck('id')->toArray()),
         'product_id' => $faker->randomElement(Product::pluck('id')->toArray()),
-        'count' => $count,
+        'quantity' => $quantity,
         'price' => $price,
-        'total' => $price*$count,
+        'total' => $price*$quantity,
     ];
 });
 

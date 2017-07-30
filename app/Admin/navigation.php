@@ -62,7 +62,7 @@ return [
                         ->setTitle('Пользователи')
                         ->setIcon('fa fa-minus')
                         ->setUrl('admin/users/user')
-                        ->setBadge( new Badge( \App\Models\Users\User::count()))
+                        //->setBadge( new Badge( \App\Models\Users\User::count()))
                         ->setAccessLogic(function (Page $page) {
                             return true;
                         })
@@ -79,7 +79,7 @@ return [
                         ->setTitle('Категории')
                         ->setIcon('fa fa-minus')
                         ->setUrl('admin/products/category')
-                        ->setBadge( new Badge( \App\Models\Products\Category::count()))
+                        //->setBadge( new Badge( \App\Models\Products\Category::count()))
                         ->setAccessLogic(function (Page $page) {
                             return true;
                         })
@@ -89,7 +89,7 @@ return [
                         ->setTitle('Продукция')
                         ->setIcon('fa fa-minus')
                         ->setUrl('admin/products/product')
-                        ->setBadge( new Badge( \App\Models\Products\Product::count()))
+                        //->setBadge( new Badge( \App\Models\Products\Product::count()))
                         ->setAccessLogic(function (Page $page) {
                             return true;
                         })
@@ -107,7 +107,7 @@ return [
                         ->setTitle('Заказы')
                         ->setIcon('fa fa-minus')
                         ->setUrl('admin')
-                        ->setBadge( new Badge( \App\Models\Orders\Order::count()))
+                        //->setBadge( new Badge( \App\Models\Orders\Order::count()))
                         ->setAccessLogic(function (Page $page) {
                             return true;
                         })
@@ -124,7 +124,7 @@ return [
                         ->setTitle('Изображения')
                         ->setIcon('fa fa-picture-o')
                         ->setUrl('admin/storages/storage')
-                        ->setBadge( new Badge( \App\Models\Storages\Storage::count()))
+                        //->setBadge( new Badge( \App\Models\Storages\Storage::count()))
                         ->setAccessLogic(function (Page $page) {
                             return true;
                         })
