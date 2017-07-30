@@ -54,7 +54,11 @@ class Product extends Section
                 // todo:сделать редактирование по месту
                 AdminColumn::text('orderby', 'Порядок')->setWidth('10px'),
                 AdminColumn::text('enable', 'Активность')->setWidth('10px'),
-                AdminColumn::relatedLink('price.purchase', 'Закуп')
+                AdminColumn::text('price.purchase', 'Закуп'),
+                AdminColumn::text('price.wholesale', 'Оптовая'),
+                AdminColumn::text('price.dealer', 'Дилерская'),
+                AdminColumn::text('price.retail', 'Розничная'),
+                AdminColumn::text('price.negotiable', 'Договорная')
             )->paginate(20);
     }
 
@@ -65,100 +69,65 @@ class Product extends Section
      */
     public function onEdit($id)
     {
-        //$product = \App\Models\Products\Product::find($id);
-       // $product->find($id);
-
-        //dd($product);
-
         $display = AdminDisplay::tabbed();
         $display->setTabs(function() use ($id) {
             $tabs = [];
             $main = AdminForm::panel();
             $price = AdminForm::panel();
             $photo = AdminForm::panel();
-            $main->addHeader(AdminFormElement::columns()
-                ->addColumn([
-                        AdminFormElement::text('name', 'Название')
-                            ->required()
-                            ->addValidationRule('unique:products,name,'.$id, 'Это Название уже занято, пробуй еще!')
-                    ], 8)
-                ->addColumn([
-                        AdminFormElement::number('orderby', 'Порядок')
-                            ->required()
-                            ->setDefaultValue(100)
-                            ->setMin(0)
-                            ->setMax(999)
-                    ], 2)
-                ->addColumn([
-                        AdminFormElement::checkbox('enable', 'Активность')
-                            ->required()
-                            ->setDefaultValue(true)
-                    ], 2)
-            );
             $main->addBody([
                 AdminFormElement::columns()->addColumn([
+                    AdminFormElement::text('name', 'Название')
+                        ->required()
+                        ->addValidationRule('unique:products,name,'.$id, 'Это Название уже занято, пробуй еще!'),
+                    AdminFormElement::number('orderby', 'Порядок')
+                        ->required()
+                        ->setDefaultValue(100)
+                        ->setMin(0)
+                        ->setMax(999),
+                    AdminFormElement::checkbox('enable', 'Активность')
+                        ->required()
+                        ->setDefaultValue(true),
                     AdminFormElement::select('category_id', 'Категория', \App\Models\Products\Category::class)
                         ->required()
                         ->setDisplay('name')
                 ], 4)
-
-            ]);
-            $main->addFooter([
-
             ]);
 
-            /*$price->addHeader(AdminFormElement::columns()
-                
-            );*/
             if (!is_null($id)) {
-
-                //$ProductPrice = \App\Models\Products\ProductPrice;
                 $pprice = \App\Models\Products\ProductPrice::where('product_id', $id)
                     ->where('deleted_at', null)
                     ->orderBy('id', 'desc')
                     ->first();
 
-
                 $price->addBody([
                     AdminFormElement::columns()->addColumn([
-
-                        AdminFormElement::hidden('product_id')->setHtmlAttribute('value', $id),
-                        AdminFormElement::text('purchase', 'Закуп')->setHtmlAttribute('value', $pprice->purchase),
-                        AdminFormElement::text('wholesale', 'Оптовая')->setHtmlAttribute('value', $pprice->wholesale),
-                        AdminFormElement::text('dealer', 'Дилерская')->setHtmlAttribute('value', $pprice->dealer),
-                        AdminFormElement::text('retail', 'Розничная')->setHtmlAttribute('value', $pprice->retail),
-                        AdminFormElement::text('negotiable', 'Договорная')->setHtmlAttribute('value', $pprice->negotiable)
-
-
+                        AdminFormElement::hidden('product_id')
+                            ->required()
+                            ->setHtmlAttribute('value', $id),
+                        AdminFormElement::text('purchase', 'Закуп')
+                            ->required()
+                            ->setHtmlAttribute('value', $pprice ? $pprice->purchase : 0 ),
+                        AdminFormElement::text('wholesale', 'Оптовая')
+                            ->required()
+                            ->setHtmlAttribute('value', $pprice ? $pprice->wholesale : 0 ),
+                        AdminFormElement::text('dealer', 'Дилерская')
+                            ->required()
+                            ->setHtmlAttribute('value', $pprice ? $pprice->dealer : 0 ),
+                        AdminFormElement::text('retail', 'Розничная')
+                            ->required()
+                            ->setHtmlAttribute('value', $pprice ? $pprice->retail : 0 ),
+                        AdminFormElement::text('negotiable', 'Договорная')
+                            ->required()
+                            ->setHtmlAttribute('value', $pprice ? $pprice->negotiable : 0 )
                     ], 4)
                 ]);
             }
 
-
-            $price->setAction('http://1000i1api:88/admin/products/price/create');
+            $product_price = new ProductPrice($this->app, $this->class);
+            $price->setAction($product_price->getCreateUrl());
 
             if (!is_null($id)) { // Если продукция создана и у нее есть ID 
-
-               /* $price = AdminDisplay::table()
-                    ->setModelClass(\App\Models\Products\ProductPrice::class)
-                    ->setApply(function($query) use($id) {
-                        $query->where('product_id', $id)
-                            ->where('deleted_at', null); // Фильтруем список цен по ID продукции
-                    })
-                    ->setParameter('product_id', $id) // При нажатии на кнопку "добавить" - подставлять ид продукции
-                    ->setColumns(
-                        AdminColumnEditable::text('wholesale', 'wholesale'),
-                        AdminColumnEditable::text('dealer', 'dealer'),
-                        AdminColumn::text('purchase', 'Закупочная'),
-                        AdminColumn::text('percen_wholesale', '<i class="fa fa-percent" aria-hidden="true"></i>')/*,
-                        AdminColumn::text('wholesale', 'Оптовая'),
-                        AdminColumn::text('percen_dealer', '<i class="fa fa-percent" aria-hidden="true"></i>'),
-                        AdminColumn::text('dealer', 'Дилерская'),
-                        AdminColumn::text('percen_retail', '<i class="fa fa-percent" aria-hidden="true"></i>'),
-                        AdminColumn::text('retail', 'Розничная'),
-                        AdminColumn::text('negotiable', 'Договорная')* /
-                    );
-*/
                 $photo = AdminDisplay::table()
                     ->setModelClass(\App\Models\Storages\Storage::class) // Обязательно необходимо указать класс модели
                     ->setApply(function($query) use($id) {

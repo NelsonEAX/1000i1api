@@ -3,9 +3,13 @@
 namespace App\Models\Orders;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CeilingProduct extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
     protected $table = 'ceiling_product';
     
     /** The attributes that are mass assignable. */

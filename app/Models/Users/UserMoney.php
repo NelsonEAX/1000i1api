@@ -3,9 +3,13 @@
 namespace App\Models\Users;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserMoney extends Model
 {
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
+
     /** The attributes that are mass assignable. */
     protected $fillable = [
 

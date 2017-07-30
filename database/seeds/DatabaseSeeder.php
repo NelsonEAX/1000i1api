@@ -120,6 +120,6 @@ class DatabaseSeeder extends Seeder
 
 
 		/** ХРАНИЛИЩЕ */
-		factory(\App\Models\Storages\Storage::class, 40)->create();
+		factory(\App\Models\Storages\Storage::class, 100)->create();
 	}
 }

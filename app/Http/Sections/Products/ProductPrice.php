@@ -61,14 +61,23 @@ class ProductPrice extends Section
             $price->addBody([
                 AdminFormElement::columns()->addColumn([
                     AdminFormElement::text('product_id', 'Закуп'),
-                    AdminFormElement::text('purchase', 'Закуп'),
-                    AdminFormElement::text('wholesale', 'Оптовая'),
-                    AdminFormElement::text('dealer', 'Дилерская'),
-                    AdminFormElement::text('retail', 'Розничная'),
+                    AdminFormElement::text('purchase', 'Закуп')
+                        ->required()
+                        ->addValidationRule('regex:/^[0-9]*[.]?[0-9]{1,2}$/', 'Пример: 1234.56'),
+                    AdminFormElement::text('wholesale', 'Оптовая')
+                        ->required()
+                        ->addValidationRule('regex:/^[0-9]*[.]?[0-9]{1,2}$/', 'Пример: 1234.56'),
+                    AdminFormElement::text('dealer', 'Дилерская')
+                        ->required()
+                        ->addValidationRule('regex:/^[0-9]*[.]?[0-9]{1,2}$/', 'Пример: 1234.56'),
+                    AdminFormElement::text('retail', 'Розничная')
+                        ->required()
+                        ->addValidationRule('regex:/^[0-9]*[.]?[0-9]{1,2}$/', 'Пример: 1234.56'),
                     AdminFormElement::text('negotiable', 'Договорная')
+                        ->required()
+                        ->addValidationRule('regex:/^[0-9]*[.]?[0-9]{1,2}$/', 'Пример: 1234.56')
                 ], 4)
             ]);
-
 
             return $price;
         }else{

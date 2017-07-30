@@ -19,6 +19,7 @@ class CreateOrdersTable extends Migration
             //$table->integer('user')->index('user')->comment('Ссылка на пользователя');
             $table->integer('customer_id')->index('customer_id')->comment('Ссылка на клиента');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ЗАКАЗЫ ТОВАРЫ */
@@ -26,10 +27,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
             $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
-            $table->decimal('count', 10, 2)->comment('Количество');
-            $table->decimal('price', 10, 2)->comment('Цена');
-            $table->decimal('total', 10, 2)->comment('Сумма');
+            $table->integer('quantity')->comment('Количество');
+            $table->integer('price')->comment('Цена');
+            $table->integer('total')->comment('Сумма');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ЗАКАЗЫ ПОТОЛКИ */
@@ -45,10 +47,11 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('ceiling_id')->index('ceiling_id')->comment('Ссылка на потолок');
             $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
-            $table->decimal('count', 10, 2)->comment('Количество');
-            $table->decimal('price', 10, 2)->comment('Цена');
-            $table->decimal('total', 10, 2)->comment('Сумма');
+            $table->integer('quantity')->comment('Количество');
+            $table->integer('price')->comment('Цена');
+            $table->integer('total')->comment('Сумма');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ЗАКАЗЫ В ПРОЦЕССЕ */
@@ -58,6 +61,7 @@ class CreateOrdersTable extends Migration
             $table->integer('user_id')->index('user_id')->comment('Ссылка на пользователя');
             $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ЗАКАЗЫ СОСТОЯНИЕ */
@@ -68,6 +72,7 @@ class CreateOrdersTable extends Migration
             $table->integer('orderby')->comment('Сортировка');
             $table->boolean('enable')->default(1)->comment('');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ЗАКАЗЫ ИСТОРИЯ */
@@ -79,16 +84,18 @@ class CreateOrdersTable extends Migration
             $table->text('sql', 65536);
             $table->string('url', 255);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ПОТОЛКИ */
         Schema::create('ceilings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('order_id')->index('order_id')->comment('Ссылка на заказ');
-            $table->decimal('perimeter', 10, 2)->comment('Цена');
-            $table->decimal('area', 10, 2)->comment('Цена');
+            $table->integer('perimeter')->comment('Периметр (мм)');
+            $table->integer('area')->comment('Площадь (кв)');
             $table->text('json', 65536);
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** КЛИЕНТЫ */
@@ -103,6 +110,7 @@ class CreateOrdersTable extends Migration
             $table->string('adres', 255);
             $table->string('comment', 2048)->nullable();;
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

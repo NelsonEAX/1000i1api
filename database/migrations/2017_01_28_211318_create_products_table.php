@@ -22,13 +22,14 @@ class CreateProductsTable extends Migration
             $table->string('description', 2048)->nullable();
             $table->string('model', 45)->nullable()->index('model');
             $table->string('color', 45)->nullable()->comment('Цвет');
-            $table->decimal('weight', 10, 6)->nullable()->comment('Вес');
-            $table->decimal('length', 10, 6)->nullable()->comment('Длина');
-            $table->decimal('width', 10, 6)->nullable()->comment('Ширина');
-            $table->decimal('height', 10, 6)->nullable()->comment('Высота');
+            $table->integer('weight')->nullable()->comment('Вес (гр)');
+            $table->integer('length')->nullable()->comment('Длина (мм)');
+            $table->integer('width')->nullable()->comment('Ширина (мм)');
+            $table->integer('height')->nullable()->comment('Высота (мм)');
             $table->integer('orderby')->default(100)->comment('Порядок');
             $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ТОВАР НА СКЛАДЕ */
@@ -39,20 +40,18 @@ class CreateProductsTable extends Migration
             $table->integer('selling')->comment('Расход, количество');
             $table->integer('vendor')->index('vendor')->comment('Ссылка на поставщика');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ТОВАР ЦЕНЫ */
         Schema::create('product_prices', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->index('product_id')->comment('Ссылка на продукт');
-            $table->decimal('purchase', 10, 2)->comment('Закупочная');
-            $table->decimal('wholesale', 10, 2)->comment('Оптовая');
-            $table->decimal('dealer', 10, 2)->comment('Дилерская');
-            $table->decimal('retail', 10, 2)->comment('Розничная');
-            $table->decimal('negotiable', 10, 2)->comment('Договорная');
-            $table->integer('percen_wholesale')->default(0)->comment('Процент от закупочной для оптовой');
-            $table->integer('percen_dealer')->default(0)->comment('Процент от закупочной для дилерской');
-            $table->integer('percen_retail')->default(0)->comment('Процент от закупочной для розничной');
+            $table->integer('purchase')->comment('Закупочная');
+            $table->integer('wholesale')->comment('Оптовая');
+            $table->integer('dealer')->comment('Дилерская');
+            $table->integer('retail')->comment('Розничная');
+            $table->integer('negotiable')->comment('Договорная');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -65,6 +64,7 @@ class CreateProductsTable extends Migration
             $table->integer('orderby')->default(100)->comment('Порядок');
             $table->boolean('enable')->default(1)->comment('Активность');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** СВЯЗЬ ТОВАР-КАТЕГОРИЯ */
@@ -83,6 +83,7 @@ class CreateProductsTable extends Migration
             $table->integer('country')->index('country')->comment('Ссылка на страну');
             $table->integer('region')->index('region')->comment('Ссылка на регион');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         /** ПОСТАВЩИК */
@@ -91,6 +92,7 @@ class CreateProductsTable extends Migration
             $table->string('name', 255);
             $table->string('description', 2048);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
