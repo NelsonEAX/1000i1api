@@ -183,9 +183,6 @@ class ProductController extends Controller
             pp.`dealer`,
             pp.`retail`,
             pp.`negotiable`,
-            pp.`percen_wholesale`,
-            pp.`percen_dealer`,
-            pp.`percen_retail`,
             CONCAT(
                 \'[\',
                 GROUP_CONCAT(
@@ -208,10 +205,7 @@ class ProductController extends Controller
             pp.`wholesale`,
             pp.`dealer`,
             pp.`retail`,
-            pp.`negotiable`,
-            pp.`percen_wholesale`,
-            pp.`percen_dealer`,
-            pp.`percen_retail`
+            pp.`negotiable`
             ORDER BY p.`orderby`
         ');
 

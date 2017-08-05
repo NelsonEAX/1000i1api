@@ -6,12 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "laravel/framework": "5.3.*",
+        "laravel/framework": "5.4.*",
         "laravelrus/sleepingowl": "4.*@dev",
         "graham-campbell/exceptions": "^9.1",
         "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-cors": "^0.8.5",
-        "laravel/passport": "v1.0.9",
+        "laravel/passport": "^3.0",
         "intervention/image": "^2.3",
         "barryvdh/laravel-ide-helper": "^2.4"
     },
