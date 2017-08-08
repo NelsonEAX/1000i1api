@@ -29,8 +29,7 @@ if (\App::environment() !== 'production') {
         ]);
     });
     Route::get('/test/clear', function () {
-
-        \App\Models\Users\User::where('email', '=', 'email@test.ru')->delete();
+        DB::table('users')->where('email', 'email@test.ru')->delete();
         //Storage::disk('storage')->put('orders/zakaz.txt', 'Contents');
         return response()->json([
             'user' => [
