@@ -71,6 +71,7 @@
             <div class="content">
                 <img src="http://s013.radikal.ru/i323/1508/62/afd4eb775863.png" class="img-responsive center-block"/>
                 <button type="button" class="btn btn-default" data-toggle="modal" data-target="#whyModal">Почему?</button>
+                <a href="/login" type="button" class="btn btn-default">Я знаю пароль, я вижу ориентир</a>
             </div>
         </div>
 <!-- Modal -->
