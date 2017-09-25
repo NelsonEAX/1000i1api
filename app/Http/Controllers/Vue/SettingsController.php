@@ -54,7 +54,7 @@ class SettingsController extends Controller
             }
         }
         return response()->json([
-            'secret' => 'Vhi2uBSR8GQbbk3XMGTHWgUebkIJFjc3Y7UokCuE',
+            'secret' => 'cJu7bRozr2jqFs31eH4Fykh3gdWDSCKUcU0QTaVb',
             'server' => 'localhost'
         ]);
     }

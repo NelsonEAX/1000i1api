@@ -50,14 +50,15 @@ class DbLandingSettings extends Section implements Initializable
      */
     public function onDisplay()
     {
-    return AdminDisplay::datatables()/*->with('users')*/
-    ->setHtmlAttribute('class', 'table-primary')
-    ->setColumns(
-        AdminColumn::text('land_id', '#')->setWidth('30px'),
-        AdminColumn::text('land_pref', 'Поддомен')->setWidth('200px'),
-        AdminColumn::text('land_adres', 'Адрес')
-        //AdminColumn::text('description', 'Описание')
-        )->paginate(20);
+        return AdminDisplay::datatables()/*->with('users')*/
+            ->setHtmlAttribute('class', 'table-primary')
+            ->setDisplaySearch(true)
+            ->setColumns(
+                AdminColumn::text('land_id', '#')->setWidth('30px'),
+                AdminColumn::text('land_pref', 'Поддомен')->setWidth('200px'),
+                AdminColumn::text('land_adres', 'Адрес')
+                //AdminColumn::text('description', 'Описание')
+             )->paginate(20);
     }
 
     /**
