@@ -1,5 +1,6 @@
 /node_modules
 /public/storage
+/public/packages/sleepingowl
 /vendor
 /.idea
 Homestead.json
@@ -7,3 +8,6 @@ Homestead.yaml
 .env
 /nbproject/private/
 /composer.lock
+/_ide_helper.php
+/storage/oauth-private.key
+/storage/oauth-public.key
