@@ -71,6 +71,7 @@ class DbLandingSettings extends Section implements Initializable
         return AdminForm::panel()->addBody([
             AdminFormElement::text('land_pref', 'Поддомен')->required()->addValidationRule('unique:mysql_potolok.db_landing,land_pref,'.$id.',land_id', 'Этот поддомен уже занят, пробуй еще!'),
             AdminFormElement::text('land_phone', 'Телефон')->required(),
+            AdminFormElement::text('land_email', 'Email')->required()->addValidationRule('email', 'Почту нормально делай'),
             AdminFormElement::text('land_adres', 'Адрес')->required(),
             AdminFormElement::text('land_ya_verif', 'Yandex верификация')->required(),
             AdminFormElement::text('land_go_verif', 'Google верификация')->required(),
